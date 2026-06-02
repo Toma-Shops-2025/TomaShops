@@ -307,7 +307,7 @@ const CreateListing = () => {
                 
                 <div>
                   <h2 className="text-xl font-semibold mb-4">Upload Images</h2>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                     <div className="grid grid-cols-3 gap-3 mb-4">
                       {imagePreviewUrls.map((url, index) => (
                         <div key={index} className="relative">
@@ -330,13 +330,13 @@ const CreateListing = () => {
                     {images.length < 5 && (
                       <div className="space-y-2">
                         <div className="flex justify-center">
-                          <Image className="h-10 w-10 text-gray-400" />
+                          <Image className="h-10 w-10 text-muted-foreground" />
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-muted-foreground">
                           Upload product images (required, max 5 images, 5MB each)
                         </div>
                         <label className="inline-flex cursor-pointer">
-                          <span className="bg-toma-purple hover:bg-toma-purple-dark text-white px-4 py-2 rounded text-sm">
+                          <span className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm">
                             <Upload className="h-4 w-4 inline-block mr-1" /> Add Images
                           </span>
                           <input
