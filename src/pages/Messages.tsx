@@ -109,7 +109,7 @@ const Messages = () => {
                       </div>
                     ))
                   ) : (
-                    <div className="p-4 text-center text-gray-500">No messages</div>
+                    <div className="p-4 text-center text-muted-foreground">No messages</div>
                   )}
                 </TabsContent>
               </Tabs>
