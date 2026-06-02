@@ -26,7 +26,7 @@ const Navbar = () => {
               placeholder="Search products..."
               className="w-full pl-10 pr-4 py-2"
             />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           </div>
         </div>
         
@@ -34,7 +34,7 @@ const Navbar = () => {
           <Link to="/messages">
             <Button variant="ghost" size="icon" className="relative">
               <MessageCircle className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-toma-purple rounded-full"></span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
             </Button>
           </Link>
           
