@@ -491,7 +491,7 @@ const ProductDetail = () => {
                     
                     <div>
                       <h3 className="font-semibold mb-2">Estimated Delivery</h3>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-muted-foreground text-sm">
                         Standard shipping: 3-5 business days<br />
                         Express shipping: 1-2 business days
                       </p>
