@@ -10,10 +10,10 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-toma-purple">
+            <span className="text-2xl font-bold text-primary">
               TomaShops
             </span>
-            <div className="hidden md:block px-2 py-1 bg-toma-purple-light text-toma-purple rounded-md text-xs">
+            <div className="hidden md:block px-2 py-1 bg-muted text-primary rounded-md text-xs">
               Video 1st
             </div>
           </Link>
