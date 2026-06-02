@@ -35,13 +35,13 @@ const MessagePreview = ({ message }: MessagePreviewProps) => {
           <div className="flex-1 min-w-0">
             <div className="flex justify-between items-baseline">
               <h3 className="font-semibold truncate">{message.senderName}</h3>
-              <span className="text-xs text-gray-500">{formatTimestamp(message.timestamp)}</span>
+              <span className="text-xs text-muted-foreground">{formatTimestamp(message.timestamp)}</span>
             </div>
             
-            <p className="text-sm text-gray-600 line-clamp-1">{message.message}</p>
+            <p className="text-sm text-muted-foreground line-clamp-1">{message.message}</p>
             
             {message.productTitle && (
-              <div className="mt-1 bg-toma-purple-light/50 text-toma-purple-dark rounded px-2 py-0.5 text-xs">
+              <div className="mt-1 bg-muted text-primary rounded px-2 py-0.5 text-xs">
                 Re: {message.productTitle}
               </div>
             )}

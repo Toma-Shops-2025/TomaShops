@@ -58,10 +58,10 @@ const Login = () => {
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold">Welcome back</h1>
-            <p className="mt-2 text-gray-600">Sign in to your account</p>
+            <p className="mt-2 text-muted-foreground">Sign in to your account</p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg shadow-md">
+          <div className="bg-card p-8 rounded-lg shadow-md border">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -93,15 +93,15 @@ const Login = () => {
                 />
 
                 <div className="flex items-center justify-between">
-                  <Link to="/auth/forgot-password" className="text-sm text-toma-purple hover:underline">
+                  <Link to="/auth/forgot-password" className="text-sm text-primary hover:underline">
                     Forgot your password?
                   </Link>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
                   {isLoading ? (
                     <div className="flex items-center">
-                      <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full"></div>
+                      <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-primary-foreground rounded-full"></div>
                       Logging in...
                     </div>
                   ) : (
@@ -117,7 +117,7 @@ const Login = () => {
             <div className="mt-6 text-center">
               <p className="text-sm">
                 Don't have an account?{' '}
-                <Link to="/auth/register" className="font-medium text-toma-purple hover:underline">
+                <Link to="/auth/register" className="font-medium text-primary hover:underline">
                   Sign up
                 </Link>
               </p>

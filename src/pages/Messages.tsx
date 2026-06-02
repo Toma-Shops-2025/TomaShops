@@ -144,7 +144,7 @@ const Messages = () => {
                         }
                       </h3>
                       {activeConversation.productTitle && (
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-muted-foreground">
                           Re: {activeConversation.productTitle}
                         </div>
                       )}
@@ -168,7 +168,7 @@ const Messages = () => {
                   }`}>
                     <div className={`max-w-[80%] rounded-lg p-3 ${
                       activeConversation.senderId === 'current-user'
-                        ? 'bg-toma-purple text-white ml-auto'
+                        ? 'bg-primary text-primary-foreground ml-auto'
                         : 'bg-muted'
                     }`}>
                       {activeConversation.message}
@@ -181,7 +181,7 @@ const Messages = () => {
                   {/* Example responses based on the message - in a real app these would be from the API */}
                   {activeConversation.senderId !== 'current-user' && (
                     <div className="flex justify-end">
-                      <div className="max-w-[80%] rounded-lg p-3 bg-toma-purple text-white">
+                      <div className="max-w-[80%] rounded-lg p-3 bg-primary text-primary-foreground">
                         Hi there! Yes, I'm interested in discussing the product further. Do you have any specific questions?
                         <div className="text-xs mt-1 opacity-70 text-right">
                           {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -195,7 +195,7 @@ const Messages = () => {
                 <div className="p-4 border-t">
                   <form onSubmit={handleSendMessage} className="flex space-x-2">
                     <Button type="button" variant="ghost" size="icon">
-                      <Image className="h-5 w-5 text-gray-500" />
+                      <Image className="h-5 w-5 text-muted-foreground" />
                     </Button>
                     <Input
                       type="text"
@@ -213,10 +213,10 @@ const Messages = () => {
             ) : (
               <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
                 <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-                  <MessageCircle className="h-8 w-8 text-gray-400" />
+                  <MessageCircle className="h-8 w-8 text-muted-foreground" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">No Conversation Selected</h3>
-                <p className="text-gray-500 max-w-md">
+                <p className="text-muted-foreground max-w-md">
                   Select a conversation from the list to start chatting or respond to inquiries about your listed products.
                 </p>
               </div>
