@@ -78,7 +78,7 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
     <Link to={`/product/${product.id}`} className="group">
       <div
         className={`rounded-lg overflow-hidden border transition-all duration-200 hover:shadow-md ${
-          featured ? 'bg-toma-purple-light/50' : 'bg-card'
+          featured ? 'bg-secondary/10' : 'bg-card'
         }`}
       >
         <div
