@@ -67,14 +67,14 @@ const ForgotPassword = () => {
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-lg shadow-md">
+          <div className="bg-card p-8 rounded-lg shadow-md border">
             {isSubmitted ? (
               <div className="text-center space-y-4">
-                <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <Mail className="h-6 w-6 text-green-600" />
+                <div className="mx-auto w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-green-500" />
                 </div>
                 <h3 className="text-lg font-medium">Check your email</h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   We've sent password reset instructions to your email address. Please check your inbox.
                 </p>
                 <Button
@@ -102,17 +102,17 @@ const ForgotPassword = () => {
                     )}
                   />
 
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
                     {isLoading ? (
                       <div className="flex items-center">
-                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full"></div>
+                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-primary-foreground rounded-full"></div>
                         Sending...
                       </div>
                     ) : "Send Reset Instructions"}
                   </Button>
 
                   <div className="text-center mt-4">
-                    <Link to="/auth/login" className="text-sm text-toma-purple hover:underline">
+                    <Link to="/auth/login" className="text-sm text-primary hover:underline">
                       Back to login
                     </Link>
                   </div>
