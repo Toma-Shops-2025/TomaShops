@@ -107,13 +107,13 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
           </Button>
 
           {featured && (
-            <Badge className="absolute top-2 left-2 bg-toma-purple text-white">Featured</Badge>
+            <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">Featured</Badge>
           )}
         </div>
 
         <div className="p-4">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="font-medium text-sm line-clamp-2 group-hover:text-toma-purple transition-colors">
+            <h3 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
               {product.title}
             </h3>
           </div>
