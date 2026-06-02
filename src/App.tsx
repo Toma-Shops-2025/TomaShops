@@ -15,6 +15,8 @@ import Register from "./pages/Auth/Register";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import CreateListing from "./pages/CreateListing";
+import MyListings from "./pages/MyListings";
+import Favorites from "./pages/Favorites";
 import Unauthorized from "./pages/Unauthorized";
 import Terms from "./pages/Legal/Terms";
 import Privacy from "./pages/Legal/Privacy";
@@ -55,6 +57,16 @@ const App = () => (
             <Route path="/create-listing" element={
               <ProtectedRoute requireSeller={true}>
                 <CreateListing />
+              </ProtectedRoute>
+            } />
+            <Route path="/my-listings" element={
+              <ProtectedRoute requireSeller={true}>
+                <MyListings />
+              </ProtectedRoute>
+            } />
+            <Route path="/favorites" element={
+              <ProtectedRoute>
+                <Favorites />
               </ProtectedRoute>
             } />
             <Route path="/unauthorized" element={<Unauthorized />} />
