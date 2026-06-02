@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,10 +12,24 @@ const UpdatedNavbar = () => {
   const { user, userType } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isMobile } = useModile();
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const [query, setQuery] = useState(params.get('q') ?? '');
 
   useEffect(() => {
     if (!isMobile && isMenuOpen) setIsMenuOpen(false);
   }, [isMobile, isMenuOpen]);
+
+  useEffect(() => {
+    setQuery(params.get('q') ?? '');
+  }, [params]);
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = query.trim();
+    navigate(q ? `/?q=${encodeURIComponent(q)}` : '/');
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="bg-background/95 backdrop-blur border-b sticky top-0 z-50">
@@ -26,12 +40,18 @@ const UpdatedNavbar = () => {
             <span className="font-bold text-xl text-brand-gradient">TomaShops</span>
           </Link>
 
-          <div className="hidden md:flex items-center flex-1 mx-6">
+          <form onSubmit={submitSearch} className="hidden md:flex items-center flex-1 mx-6">
             <div className="relative w-full max-w-xl">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search products, sellers, categories..." className="pl-10" />
+              <Input
+                type="search"
+                placeholder="Search products, sellers, categories..."
+                className="pl-10"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
             </div>
-          </div>
+          </form>
 
           <div className="hidden md:flex items-center space-x-4">
             {user && userType === 'seller' && (
@@ -55,21 +75,31 @@ const UpdatedNavbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-background border-t">
           <div className="container mx-auto px-4 py-4">
-            <div className="relative mb-4">
+            <form onSubmit={submitSearch} className="relative mb-4">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search products, sellers..." className="pl-10" />
-            </div>
+              <Input
+                type="search"
+                placeholder="Search products, sellers..."
+                className="pl-10"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </form>
 
             <nav className="space-y-1">
               <Link to="/" className="block py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>Home</Link>
               {user ? (
                 <>
                   <Link to="/profile" className="block py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>My Profile</Link>
+                  <Link to="/favorites" className="block py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>Favorites</Link>
                   <Link to="/messages" className="block py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>Messages</Link>
                   {userType === 'seller' && (
-                    <Link to="/create-listing" className="flex items-center py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>
-                      <Upload className="h-4 w-4 mr-2" /> List an Item
-                    </Link>
+                    <>
+                      <Link to="/my-listings" className="block py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>My Listings</Link>
+                      <Link to="/create-listing" className="flex items-center py-2 hover:bg-muted rounded-md px-3" onClick={() => setIsMenuOpen(false)}>
+                        <Upload className="h-4 w-4 mr-2" /> List an Item
+                      </Link>
+                    </>
                   )}
                 </>
               ) : (
