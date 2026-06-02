@@ -519,7 +519,7 @@ const ProductDetail = () => {
                                     ? 'text-yellow-400 fill-current' 
                                     : i < product.seller.rating 
                                       ? 'text-yellow-400 fill-current' 
-                                      : 'text-gray-300'
+                                      : 'text-muted'
                                 }`}
                               />
                             ))}
