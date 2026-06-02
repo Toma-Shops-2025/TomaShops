@@ -300,8 +300,8 @@ const ProductDetail = () => {
         <main className="flex-1 container mx-auto p-4 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-            <p className="text-gray-500 mb-6">The product you're looking for might be removed or doesn't exist.</p>
-            <Link to="/" className="text-toma-purple hover:underline">
+            <p className="text-muted-foreground mb-6">The product you're looking for might be removed or doesn't exist.</p>
+            <Link to="/" className="text-primary hover:underline">
               Return to Home
             </Link>
           </div>
@@ -317,14 +317,14 @@ const ProductDetail = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-4">
-          <Link to="/" className="hover:text-toma-purple">Home</Link>
+        <div className="text-sm text-muted-foreground mb-4">
+          <Link to="/" className="hover:text-primary">Home</Link>
           <span className="mx-2">&gt;</span>
-          <Link to={`/?category=${product.category}`} className="hover:text-toma-purple">
+          <Link to={`/?category=${product.category}`} className="hover:text-primary">
             {product.category}
           </Link>
           <span className="mx-2">&gt;</span>
-          <span className="text-gray-700">{product.title}</span>
+          <span className="text-foreground">{product.title}</span>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -357,7 +357,7 @@ const ProductDetail = () => {
                 <div className="flex space-x-2 overflow-x-auto pb-2">
                   <div 
                     className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                      activeImage === product.thumbnailUrl ? 'border-toma-purple' : 'border-transparent'
+                      activeImage === product.thumbnailUrl ? 'border-primary' : 'border-transparent'
                     }`}
                     onClick={() => setActiveImage(product.thumbnailUrl)}
                   >
@@ -368,7 +368,7 @@ const ProductDetail = () => {
                         className="w-full h-full object-cover rounded"
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
-                        <PlayCircle className="h-6 w-6 text-white" />
+                        <PlayCircle className="h-6 w-6 text-primary-foreground" />
                       </div>
                     </div>
                   </div>
@@ -377,7 +377,7 @@ const ProductDetail = () => {
                     <div 
                       key={idx}
                       className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                        activeImage === imgUrl ? 'border-toma-purple' : 'border-transparent'
+                        activeImage === imgUrl ? 'border-primary' : 'border-transparent'
                       }`}
                       onClick={() => setActiveImage(imgUrl)}
                     >
@@ -394,7 +394,7 @@ const ProductDetail = () => {
               <div className="px-4 pb-4 flex justify-between items-center">
                 <h1 className="text-xl font-bold">{product.title}</h1>
                 <div className="flex space-x-2">
-                  <Button size="sm" variant="ghost" className="text-gray-600" onClick={handleShareProduct}>
+                  <Button size="sm" variant="ghost" className="text-muted-foreground" onClick={handleShareProduct}>
                     <Share className="h-4 w-4 mr-1" /> Share
                   </Button>
                   
@@ -402,7 +402,7 @@ const ProductDetail = () => {
                     size="sm" 
                     variant="ghost"
                     onClick={handleToggleFavorite}
-                    className={isFavorited ? "text-red-500" : "text-gray-600"}
+                    className={isFavorited ? "text-red-500" : "text-muted-foreground"}
                   >
                     <Heart className={`h-4 w-4 mr-1 ${isFavorited ? "fill-current" : ""}`} />
                     {isFavorited ? 'Saved' : 'Save'}
@@ -444,25 +444,25 @@ const ProductDetail = () => {
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold mb-2">Description</h3>
-                      <p className="text-gray-600 whitespace-pre-line">{product.description}</p>
+                      <p className="text-muted-foreground whitespace-pre-line">{product.description}</p>
                     </div>
                     
                     <div>
                       <h3 className="font-semibold mb-2">Specifications</h3>
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="text-gray-500">Condition</div>
+                        <div className="text-muted-foreground">Condition</div>
                         <div>{product.condition}</div>
                         
-                        <div className="text-gray-500">Category</div>
+                        <div className="text-muted-foreground">Category</div>
                         <div>{product.category}</div>
                         
-                        <div className="text-gray-500">Location</div>
+                        <div className="text-muted-foreground">Location</div>
                         <div>{product.location}</div>
                         
-                        <div className="text-gray-500">Posted</div>
+                        <div className="text-muted-foreground">Posted</div>
                         <div>{new Date(product.datePosted).toLocaleDateString()}</div>
                         
-                        <div className="text-gray-500">Views</div>
+                        <div className="text-muted-foreground">Views</div>
                         <div>{product.views}</div>
                       </div>
                     </div>
