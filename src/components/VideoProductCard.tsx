@@ -120,7 +120,7 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
 
           <div className="flex justify-between items-center">
             <span className="font-bold text-lg">${product.price.toFixed(2)}</span>
-            <div className="flex items-center text-xs text-gray-500">
+            <div className="flex items-center text-xs text-muted-foreground">
               <Eye className="h-3 w-3 mr-1" />
               <span>{product.views}</span>
             </div>
@@ -133,9 +133,9 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
                 alt={product.seller?.name || product.seller?.full_name || 'Seller'}
                 className="w-5 h-5 rounded-full object-cover"
               />
-              <span className="text-xs text-gray-600">{product.seller?.name || product.seller?.full_name || 'Seller'}</span>
+              <span className="text-xs text-muted-foreground">{product.seller?.name || product.seller?.full_name || 'Seller'}</span>
             </div>
-            <span className="text-xs text-gray-500">{product.location}</span>
+            <span className="text-xs text-muted-foreground">{product.location}</span>
           </div>
         </div>
       </div>
