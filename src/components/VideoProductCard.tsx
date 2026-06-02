@@ -98,7 +98,7 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
             size="icon"
             variant="ghost"
             className={`absolute top-2 right-2 rounded-full bg-background/70 hover:bg-background/90 transition-colors ${
-              isFavorited ? 'text-red-500' : 'text-gray-600'
+              isFavorited ? 'text-red-500' : 'text-muted-foreground'
             }`}
             onClick={toggleFavorite}
             disabled={busy}
