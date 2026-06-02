@@ -48,7 +48,7 @@ const Messages = () => {
                   placeholder="Search messages..."
                   className="pl-10"
                 />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
             </div>
             
@@ -72,7 +72,7 @@ const Messages = () => {
                       </div>
                     ))
                   ) : (
-                    <div className="p-4 text-center text-gray-500">No messages in your inbox</div>
+                    <div className="p-4 text-center text-muted-foreground">No messages in your inbox</div>
                   )}
                 </TabsContent>
                 

@@ -524,7 +524,7 @@ const ProductDetail = () => {
                               />
                             ))}
                           </div>
-                          <span className="ml-1 text-gray-600">{product.seller.rating.toFixed(1)}</span>
+                          <span className="ml-1 text-muted-foreground">{product.seller.rating.toFixed(1)}</span>
                         </div>
                       </div>
                     </div>
@@ -549,11 +549,11 @@ const ProductDetail = () => {
               <div className="mb-4 pb-4 border-b">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-2xl font-bold">${product.price.toFixed(2)}</h2>
-                  <Badge variant="outline" className="text-toma-purple border-toma-purple">
+                  <Badge variant="outline" className="text-primary border-primary">
                     {product.condition}
                   </Badge>
                 </div>
-                <div className="flex items-center text-sm text-gray-500">
+                <div className="flex items-center text-sm text-muted-foreground">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1">
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
@@ -580,7 +580,7 @@ const ProductDetail = () => {
               <div className="mt-6 pt-4 border-t text-sm">
                 <div className="flex items-center justify-center space-x-4">
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                       <path d="M17 11h1a3 3 0 0 1 0 6h-1" />
                       <path d="M9 12v6" />
                       <path d="M13 12v6" />
@@ -592,7 +592,7 @@ const ProductDetail = () => {
                   </div>
                   
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
                       <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
@@ -620,7 +620,7 @@ const ProductDetail = () => {
           ) : (
             <div className="py-8">
               <h2 className="text-xl md:text-2xl font-bold mb-4">Similar Products</h2>
-              <p className="text-gray-500">No similar products found.</p>
+              <p className="text-muted-foreground">No similar products found.</p>
             </div>
           )}
         </div>
