@@ -481,10 +481,10 @@ const CreateListing = () => {
                     )}
                   />
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
                     {isLoading ? (
                       <div className="flex items-center">
-                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full"></div>
+                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-primary-foreground rounded-full"></div>
                         {videoUploadProgress > 0 && videoUploadProgress < 100 ? (
                           `Uploading video ${videoUploadProgress}%`
                         ) : imagesUploadProgress > 0 && imagesUploadProgress < 100 ? (
