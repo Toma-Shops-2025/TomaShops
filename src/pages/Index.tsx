@@ -97,30 +97,30 @@ const Index = () => {
 
       <main className="flex-1 container mx-auto px-4">
         {!searchQuery && (
-          <section className="py-8 md:py-12 my-4 bg-gradient-to-r from-toma-purple-light to-toma-purple/10 rounded-xl">
+          <section className="py-8 md:py-12 my-4 bg-gradient-to-r from-secondary/20 to-primary/10 rounded-xl">
             <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center">
               <div className="md:w-1/2 mb-8 md:mb-0">
-                <h1 className="text-3xl md:text-5xl font-bold mb-4 text-toma-gray-dark">
-                  <span className="text-toma-purple">Video First</span> Shopping Experience
+                <h1 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
+                  <span className="text-primary">Video First</span> Shopping Experience
                 </h1>
-                <p className="text-lg mb-6 text-gray-600 max-w-lg">
+                <p className="text-lg mb-6 text-muted-foreground max-w-lg">
                   Discover products through authentic videos from real sellers. Shop confidently with our video-focused marketplace.
                 </p>
                 <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button asChild size="lg" className="bg-toma-purple hover:bg-toma-purple-dark">
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
                     <a href="#browse">Start Shopping</a>
                   </Button>
-                  <Button asChild size="lg" variant="outline" className="border-toma-purple text-toma-purple">
+                  <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
                     <Link to="/create-listing">Sell Your Items</Link>
                   </Button>
                 </div>
               </div>
               <div className="md:w-1/2 relative">
-                <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-white max-w-md mx-auto">
+                <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-border max-w-md mx-auto">
                   <img src="/placeholder.svg" alt="Video shopping experience" className="w-full h-auto" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="rounded-full bg-white/80 p-3">
-                      <PlayCircle className="h-12 w-12 text-toma-purple" />
+                    <div className="rounded-full bg-background/80 p-3">
+                      <PlayCircle className="h-12 w-12 text-primary" />
                     </div>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ const Index = () => {
         )}
 
         {searchQuery && (
-          <div className="my-6 flex items-center justify-between bg-toma-purple-light/40 px-4 py-3 rounded-lg">
+          <div className="my-6 flex items-center justify-between bg-muted/40 px-4 py-3 rounded-lg">
             <p className="text-sm">
               Showing results for <span className="font-semibold">"{searchQuery}"</span> —{' '}
               {searchFiltered.length} match{searchFiltered.length === 1 ? '' : 'es'}
@@ -177,7 +177,7 @@ const Index = () => {
                 <TabsTrigger
                   key={category}
                   value={category}
-                  className="m-1 data-[state=active]:bg-toma-purple data-[state=active]:text-white"
+                  className="m-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                   onClick={() => setActiveCategory(category)}
                 >
                   {category}
@@ -208,7 +208,7 @@ const Index = () => {
                 </div>
               ) : (
                 <div className="text-center py-12">
-                  <p className="text-gray-500">
+                  <p className="text-muted-foreground">
                     {searchQuery
                       ? `No products match "${searchQuery}"${activeCategory !== 'All' ? ` in ${activeCategory}` : ''}.`
                       : 'No products found in this category.'}
@@ -237,34 +237,34 @@ const Index = () => {
         )}
 
         {!searchQuery && (
-          <section className="my-12 py-8 bg-toma-purple-light/50 rounded-lg">
+          <section className="my-12 py-8 bg-muted/30 rounded-lg">
             <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Why Choose TomaShops?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="mx-auto w-12 h-12 bg-toma-purple-light rounded-full flex items-center justify-center mb-4">
-                  <PlayCircle className="h-6 w-6 text-toma-purple" />
+              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
+                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+                  <PlayCircle className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="font-bold mb-2">Video First</h3>
-                <p className="text-gray-600 text-sm">See products in action before you buy with authentic videos from sellers.</p>
+                <p className="text-muted-foreground text-sm">See products in action before you buy with authentic videos from sellers.</p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="mx-auto w-12 h-12 bg-toma-purple-light rounded-full flex items-center justify-center mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-toma-purple">
+              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
+                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
                   </svg>
                 </div>
                 <h3 className="font-bold mb-2">Buyer Protection</h3>
-                <p className="text-gray-600 text-sm">Shop confidently with our secure messaging and verification systems.</p>
+                <p className="text-muted-foreground text-sm">Shop confidently with our secure messaging and verification systems.</p>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="mx-auto w-12 h-12 bg-toma-purple-light rounded-full flex items-center justify-center mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-toma-purple">
+              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
+                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
                     <line x1="12" x2="12" y1="2" y2="22" />
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   </svg>
                 </div>
                 <h3 className="font-bold mb-2">Free for Everyone</h3>
-                <p className="text-gray-600 text-sm">No listing fees or commissions for sellers. Free to browse for buyers.</p>
+                <p className="text-muted-foreground text-sm">No listing fees or commissions for sellers. Free to browse for buyers.</p>
               </div>
             </div>
           </section>
