@@ -131,7 +131,7 @@ const PaymentProcessing = ({
                         {...field}
                         onChange={(e) => field.onChange(formatCardNumber(e.target.value))}
                       />
-                      <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -152,7 +152,7 @@ const PaymentProcessing = ({
                         className="pl-10" 
                         {...field} 
                       />
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -176,7 +176,7 @@ const PaymentProcessing = ({
                           onChange={(e) => field.onChange(formatExpiryDate(e.target.value))}
                           maxLength={5}
                         />
-                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -200,7 +200,7 @@ const PaymentProcessing = ({
                           maxLength={4}
                           onChange={(e) => field.onChange(e.target.value.replace(/\D/g, ''))}
                         />
-                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -216,7 +216,7 @@ const PaymentProcessing = ({
               <Button type="submit" disabled={isLoading}>
                 {isLoading ? (
                   <div className="flex items-center">
-                    <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full"></div>
+                    <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-primary-foreground rounded-full"></div>
                     Processing...
                   </div>
                 ) : (

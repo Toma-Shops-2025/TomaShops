@@ -300,8 +300,8 @@ const ProductDetail = () => {
         <main className="flex-1 container mx-auto p-4 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-            <p className="text-gray-500 mb-6">The product you're looking for might be removed or doesn't exist.</p>
-            <Link to="/" className="text-toma-purple hover:underline">
+            <p className="text-muted-foreground mb-6">The product you're looking for might be removed or doesn't exist.</p>
+            <Link to="/" className="text-primary hover:underline">
               Return to Home
             </Link>
           </div>
@@ -317,14 +317,14 @@ const ProductDetail = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-4">
-          <Link to="/" className="hover:text-toma-purple">Home</Link>
+        <div className="text-sm text-muted-foreground mb-4">
+          <Link to="/" className="hover:text-primary">Home</Link>
           <span className="mx-2">&gt;</span>
-          <Link to={`/?category=${product.category}`} className="hover:text-toma-purple">
+          <Link to={`/?category=${product.category}`} className="hover:text-primary">
             {product.category}
           </Link>
           <span className="mx-2">&gt;</span>
-          <span className="text-gray-700">{product.title}</span>
+          <span className="text-foreground">{product.title}</span>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -357,7 +357,7 @@ const ProductDetail = () => {
                 <div className="flex space-x-2 overflow-x-auto pb-2">
                   <div 
                     className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                      activeImage === product.thumbnailUrl ? 'border-toma-purple' : 'border-transparent'
+                      activeImage === product.thumbnailUrl ? 'border-primary' : 'border-transparent'
                     }`}
                     onClick={() => setActiveImage(product.thumbnailUrl)}
                   >
@@ -368,7 +368,7 @@ const ProductDetail = () => {
                         className="w-full h-full object-cover rounded"
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
-                        <PlayCircle className="h-6 w-6 text-white" />
+                        <PlayCircle className="h-6 w-6 text-primary-foreground" />
                       </div>
                     </div>
                   </div>
@@ -377,7 +377,7 @@ const ProductDetail = () => {
                     <div 
                       key={idx}
                       className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                        activeImage === imgUrl ? 'border-toma-purple' : 'border-transparent'
+                        activeImage === imgUrl ? 'border-primary' : 'border-transparent'
                       }`}
                       onClick={() => setActiveImage(imgUrl)}
                     >
@@ -394,7 +394,7 @@ const ProductDetail = () => {
               <div className="px-4 pb-4 flex justify-between items-center">
                 <h1 className="text-xl font-bold">{product.title}</h1>
                 <div className="flex space-x-2">
-                  <Button size="sm" variant="ghost" className="text-gray-600" onClick={handleShareProduct}>
+                  <Button size="sm" variant="ghost" className="text-muted-foreground" onClick={handleShareProduct}>
                     <Share className="h-4 w-4 mr-1" /> Share
                   </Button>
                   
@@ -402,7 +402,7 @@ const ProductDetail = () => {
                     size="sm" 
                     variant="ghost"
                     onClick={handleToggleFavorite}
-                    className={isFavorited ? "text-red-500" : "text-gray-600"}
+                    className={isFavorited ? "text-red-500" : "text-muted-foreground"}
                   >
                     <Heart className={`h-4 w-4 mr-1 ${isFavorited ? "fill-current" : ""}`} />
                     {isFavorited ? 'Saved' : 'Save'}
@@ -444,25 +444,25 @@ const ProductDetail = () => {
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold mb-2">Description</h3>
-                      <p className="text-gray-600 whitespace-pre-line">{product.description}</p>
+                      <p className="text-muted-foreground whitespace-pre-line">{product.description}</p>
                     </div>
                     
                     <div>
                       <h3 className="font-semibold mb-2">Specifications</h3>
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="text-gray-500">Condition</div>
+                        <div className="text-muted-foreground">Condition</div>
                         <div>{product.condition}</div>
                         
-                        <div className="text-gray-500">Category</div>
+                        <div className="text-muted-foreground">Category</div>
                         <div>{product.category}</div>
                         
-                        <div className="text-gray-500">Location</div>
+                        <div className="text-muted-foreground">Location</div>
                         <div>{product.location}</div>
                         
-                        <div className="text-gray-500">Posted</div>
+                        <div className="text-muted-foreground">Posted</div>
                         <div>{new Date(product.datePosted).toLocaleDateString()}</div>
                         
-                        <div className="text-gray-500">Views</div>
+                        <div className="text-muted-foreground">Views</div>
                         <div>{product.views}</div>
                       </div>
                     </div>
@@ -491,7 +491,7 @@ const ProductDetail = () => {
                     
                     <div>
                       <h3 className="font-semibold mb-2">Estimated Delivery</h3>
-                      <p className="text-gray-600 text-sm">
+                      <p className="text-muted-foreground text-sm">
                         Standard shipping: 3-5 business days<br />
                         Express shipping: 1-2 business days
                       </p>
@@ -519,12 +519,12 @@ const ProductDetail = () => {
                                     ? 'text-yellow-400 fill-current' 
                                     : i < product.seller.rating 
                                       ? 'text-yellow-400 fill-current' 
-                                      : 'text-gray-300'
+                                      : 'text-muted'
                                 }`}
                               />
                             ))}
                           </div>
-                          <span className="ml-1 text-gray-600">{product.seller.rating.toFixed(1)}</span>
+                          <span className="ml-1 text-muted-foreground">{product.seller.rating.toFixed(1)}</span>
                         </div>
                       </div>
                     </div>
@@ -549,11 +549,11 @@ const ProductDetail = () => {
               <div className="mb-4 pb-4 border-b">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-2xl font-bold">${product.price.toFixed(2)}</h2>
-                  <Badge variant="outline" className="text-toma-purple border-toma-purple">
+                  <Badge variant="outline" className="text-primary border-primary">
                     {product.condition}
                   </Badge>
                 </div>
-                <div className="flex items-center text-sm text-gray-500">
+                <div className="flex items-center text-sm text-muted-foreground">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1">
                     <circle cx="12" cy="12" r="10" />
                     <polyline points="12 6 12 12 16 14" />
@@ -580,7 +580,7 @@ const ProductDetail = () => {
               <div className="mt-6 pt-4 border-t text-sm">
                 <div className="flex items-center justify-center space-x-4">
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                       <path d="M17 11h1a3 3 0 0 1 0 6h-1" />
                       <path d="M9 12v6" />
                       <path d="M13 12v6" />
@@ -592,7 +592,7 @@ const ProductDetail = () => {
                   </div>
                   
                   <div className="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                       <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
                       <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
@@ -620,7 +620,7 @@ const ProductDetail = () => {
           ) : (
             <div className="py-8">
               <h2 className="text-xl md:text-2xl font-bold mb-4">Similar Products</h2>
-              <p className="text-gray-500">No similar products found.</p>
+              <p className="text-muted-foreground">No similar products found.</p>
             </div>
           )}
         </div>

@@ -261,11 +261,11 @@ const CreateListing = () => {
           <div className="max-w-3xl mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold mb-6">Create a New Listing</h1>
             
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-card p-6 rounded-lg shadow-md border">
               <div className="space-y-8 mb-8">
                 <div>
                   <h2 className="text-xl font-semibold mb-4">Upload Video</h2>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                     {videoPreview ? (
                       <div className="relative">
                         <video 
@@ -284,13 +284,13 @@ const CreateListing = () => {
                     ) : (
                       <div className="space-y-2">
                         <div className="flex justify-center">
-                          <Video className="h-12 w-12 text-gray-400" />
+                          <Video className="h-12 w-12 text-muted-foreground" />
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-muted-foreground">
                           Upload a video of your product (required, max 100MB)
                         </div>
                         <label className="inline-flex cursor-pointer">
-                          <span className="bg-toma-purple hover:bg-toma-purple-dark text-white px-4 py-2 rounded text-sm">
+                          <span className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm">
                             <Upload className="h-4 w-4 inline-block mr-1" /> Select Video
                           </span>
                           <input
@@ -307,7 +307,7 @@ const CreateListing = () => {
                 
                 <div>
                   <h2 className="text-xl font-semibold mb-4">Upload Images</h2>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                     <div className="grid grid-cols-3 gap-3 mb-4">
                       {imagePreviewUrls.map((url, index) => (
                         <div key={index} className="relative">
@@ -330,13 +330,13 @@ const CreateListing = () => {
                     {images.length < 5 && (
                       <div className="space-y-2">
                         <div className="flex justify-center">
-                          <Image className="h-10 w-10 text-gray-400" />
+                          <Image className="h-10 w-10 text-muted-foreground" />
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-muted-foreground">
                           Upload product images (required, max 5 images, 5MB each)
                         </div>
                         <label className="inline-flex cursor-pointer">
-                          <span className="bg-toma-purple hover:bg-toma-purple-dark text-white px-4 py-2 rounded text-sm">
+                          <span className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded text-sm">
                             <Upload className="h-4 w-4 inline-block mr-1" /> Add Images
                           </span>
                           <input
@@ -481,10 +481,10 @@ const CreateListing = () => {
                     )}
                   />
                   
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
                     {isLoading ? (
                       <div className="flex items-center">
-                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-white rounded-full"></div>
+                        <div className="animate-spin mr-2 h-4 w-4 border-2 border-t-transparent border-primary-foreground rounded-full"></div>
                         {videoUploadProgress > 0 && videoUploadProgress < 100 ? (
                           `Uploading video ${videoUploadProgress}%`
                         ) : imagesUploadProgress > 0 && imagesUploadProgress < 100 ? (

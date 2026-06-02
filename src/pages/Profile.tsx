@@ -45,7 +45,7 @@ const Profile = () => {
               <img 
                 src={user.avatar} 
                 alt={user.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-toma-purple-light"
+                className="w-24 h-24 rounded-full object-cover border-4 border-primary/30"
               />
               <Button size="icon" variant="outline" className="absolute bottom-0 right-0 rounded-full bg-background h-8 w-8">
                 <Edit className="h-4 w-4" />
@@ -56,11 +56,11 @@ const Profile = () => {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <h1 className="text-2xl font-bold mb-1">{user.name}</h1>
-                  <div className="text-gray-500">@{user.username}</div>
+                  <div className="text-muted-foreground">@{user.username}</div>
                   
                   <div className="flex flex-wrap items-center gap-3 mt-2">
                     <div className="flex items-center text-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                         <circle cx="12" cy="10" r="3" />
                       </svg>
@@ -68,7 +68,7 @@ const Profile = () => {
                     </div>
                     
                     <div className="flex items-center text-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-gray-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1 text-muted-foreground">
                         <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
                         <line x1="16" x2="16" y1="2" y2="6" />
                         <line x1="8" x2="8" y1="2" y2="6" />
@@ -91,14 +91,14 @@ const Profile = () => {
                                 ? 'text-yellow-400 fill-current' 
                                 : i < user.rating 
                                   ? 'text-yellow-400 fill-current' 
-                                  : 'text-gray-300'
+                                  : 'text-muted'
                             }`}
                           />
                         ))}
                       </div>
                       <span className="ml-1 font-semibold">{user.rating.toFixed(1)}</span>
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">
+                    <div className="text-xs text-muted-foreground mt-1">
                       {user.reviewCount} reviews
                     </div>
                   </div>
@@ -110,22 +110,22 @@ const Profile = () => {
                 </div>
               </div>
               
-              <p className="text-gray-600 mt-4 max-w-2xl">{user.bio}</p>
+              <p className="text-muted-foreground mt-4 max-w-2xl">{user.bio}</p>
             </div>
           </div>
           
           <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t">
             <div className="text-center">
-              <div className="text-xl font-bold text-toma-purple">{user.stats.listings}</div>
-              <div className="text-sm text-gray-500">Active Listings</div>
+              <div className="text-xl font-bold text-primary">{user.stats.listings}</div>
+              <div className="text-sm text-muted-foreground">Active Listings</div>
             </div>
             <div className="text-center">
-              <div className="text-xl font-bold text-toma-purple">{user.stats.sold}</div>
-              <div className="text-sm text-gray-500">Items Sold</div>
+              <div className="text-xl font-bold text-primary">{user.stats.sold}</div>
+              <div className="text-sm text-muted-foreground">Items Sold</div>
             </div>
             <div className="text-center">
-              <div className="text-xl font-bold text-toma-purple">{user.stats.favorites}</div>
-              <div className="text-sm text-gray-500">Favorites</div>
+              <div className="text-xl font-bold text-primary">{user.stats.favorites}</div>
+              <div className="text-sm text-muted-foreground">Favorites</div>
             </div>
           </div>
         </div>
@@ -168,9 +168,9 @@ const Profile = () => {
               </div>
             ) : (
               <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
-                <Store className="h-12 w-12 mx-auto text-gray-400 mb-3" />
+                <Store className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
                 <h3 className="font-semibold mb-2">No Active Listings</h3>
-                <p className="text-gray-500 mb-4 max-w-md mx-auto">
+                <p className="text-muted-foreground mb-4 max-w-md mx-auto">
                   You don't have any active listings yet. Create your first listing to start selling!
                 </p>
                 <Button>
@@ -193,9 +193,9 @@ const Profile = () => {
               </div>
             ) : (
               <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
-                <ShoppingBag className="h-12 w-12 mx-auto text-gray-400 mb-3" />
+                <ShoppingBag className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
                 <h3 className="font-semibold mb-2">No Sold Items</h3>
-                <p className="text-gray-500 max-w-md mx-auto">
+                <p className="text-muted-foreground max-w-md mx-auto">
                   You haven't sold any items yet. Create listings to start selling!
                 </p>
               </div>
@@ -215,9 +215,9 @@ const Profile = () => {
               </div>
             ) : (
               <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
-                <Heart className="h-12 w-12 mx-auto text-gray-400 mb-3" />
+                <Heart className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
                 <h3 className="font-semibold mb-2">No Favorites Yet</h3>
-                <p className="text-gray-500 max-w-md mx-auto">
+                <p className="text-muted-foreground max-w-md mx-auto">
                   You haven't saved any items to your favorites yet. Browse the marketplace and heart items you like!
                 </p>
               </div>
@@ -230,9 +230,9 @@ const Profile = () => {
             </div>
             
             <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
-              <Package className="h-12 w-12 mx-auto text-gray-400 mb-3" />
+              <Package className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
               <h3 className="font-semibold mb-2">No Purchases Yet</h3>
-              <p className="text-gray-500 max-w-md mx-auto">
+              <p className="text-muted-foreground max-w-md mx-auto">
                 You haven't made any purchases yet. Browse the marketplace to find amazing products!
               </p>
             </div>

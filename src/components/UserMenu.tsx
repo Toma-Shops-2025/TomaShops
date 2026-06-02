@@ -74,7 +74,7 @@ const UserMenu = () => {
             <p className="text-sm font-medium leading-none">{user.user_metadata?.full_name || user.email}</p>
             <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
             {userType && (
-              <span className="mt-1 text-xs bg-toma-purple-light text-toma-purple py-0.5 px-2 rounded-full inline-flex items-center">
+              <span className="mt-1 text-xs bg-muted text-primary py-0.5 px-2 rounded-full inline-flex items-center">
                 {userType === 'seller' ? 'Seller' : 'Buyer'}
               </span>
             )}

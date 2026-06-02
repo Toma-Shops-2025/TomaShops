@@ -78,7 +78,7 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
     <Link to={`/product/${product.id}`} className="group">
       <div
         className={`rounded-lg overflow-hidden border transition-all duration-200 hover:shadow-md ${
-          featured ? 'bg-toma-purple-light/50' : 'bg-card'
+          featured ? 'bg-secondary/10' : 'bg-card'
         }`}
       >
         <div
@@ -98,7 +98,7 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
             size="icon"
             variant="ghost"
             className={`absolute top-2 right-2 rounded-full bg-background/70 hover:bg-background/90 transition-colors ${
-              isFavorited ? 'text-red-500' : 'text-gray-600'
+              isFavorited ? 'text-red-500' : 'text-muted-foreground'
             }`}
             onClick={toggleFavorite}
             disabled={busy}
@@ -107,20 +107,20 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
           </Button>
 
           {featured && (
-            <Badge className="absolute top-2 left-2 bg-toma-purple text-white">Featured</Badge>
+            <Badge className="absolute top-2 left-2 bg-primary text-primary-foreground">Featured</Badge>
           )}
         </div>
 
         <div className="p-4">
           <div className="flex justify-between items-start mb-2">
-            <h3 className="font-medium text-sm line-clamp-2 group-hover:text-toma-purple transition-colors">
+            <h3 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
               {product.title}
             </h3>
           </div>
 
           <div className="flex justify-between items-center">
             <span className="font-bold text-lg">${product.price.toFixed(2)}</span>
-            <div className="flex items-center text-xs text-gray-500">
+            <div className="flex items-center text-xs text-muted-foreground">
               <Eye className="h-3 w-3 mr-1" />
               <span>{product.views}</span>
             </div>
@@ -133,9 +133,9 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
                 alt={product.seller?.name || product.seller?.full_name || 'Seller'}
                 className="w-5 h-5 rounded-full object-cover"
               />
-              <span className="text-xs text-gray-600">{product.seller?.name || product.seller?.full_name || 'Seller'}</span>
+              <span className="text-xs text-muted-foreground">{product.seller?.name || product.seller?.full_name || 'Seller'}</span>
             </div>
-            <span className="text-xs text-gray-500">{product.location}</span>
+            <span className="text-xs text-muted-foreground">{product.location}</span>
           </div>
         </div>
       </div>
