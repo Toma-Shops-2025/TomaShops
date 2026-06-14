@@ -276,7 +276,7 @@ const CreateListing = () => {
         <Navbar />
         <main className="flex-1 container mx-auto px-4 py-8">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-2xl md:text-3xl font-bold mb-6">Create a New Listing</h1>
+            <h1 className="font-display text-5xl md:text-6xl leading-none mb-8 drop-shadow-[3px_3px_0px_#ff5722]">New Listing</h1>
             
             <div className="bg-card p-6 rounded-lg shadow-md border">
               <div className="space-y-8 mb-8">
