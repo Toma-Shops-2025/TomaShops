@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
-import VideoProductCard from '@/components/VideoProductCard';
 import { products } from '@/data/products';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';

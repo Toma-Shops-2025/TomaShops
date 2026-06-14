@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import MessagePreview from '@/components/MessagePreview';
-import MessagePreview from '@/components/MessagePreview';
 import { messages, Message } from '@/data/products';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import FeaturedProducts from '@/components/FeaturedProducts';
-import FeaturedProducts from '@/components/FeaturedProducts';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Share, Heart, Flag, MessageCircle, Star, PlayCircle } from 'lucide-react';

@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
-import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
 import { Button } from '@/components/ui/button';
 import { X, Upload, Zap, Shield, Gift } from 'lucide-react';
