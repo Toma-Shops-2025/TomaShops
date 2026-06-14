@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import AdBanner from '@/components/AdBanner';
+import VideoProductCard from '@/components/VideoProductCard';
 import VideoProductCard from '@/components/VideoProductCard';
 import { products } from '@/data/products';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -132,10 +132,7 @@ const Profile = () => {
           </div>
         </div>
         
-        {/* Ad Banner */}
-        <div className="mb-6">
-          <AdBanner type="horizontal" />
-        </div>
+        {/* Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
         
         {/* Tabs for user content */}
         <Tabs defaultValue="listings" value={activeTab} onValueChange={setActiveTab}>

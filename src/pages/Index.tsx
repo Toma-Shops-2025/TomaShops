@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
-import AdBanner from '@/components/AdBanner';
+import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
 import { Button } from '@/components/ui/button';
 import { X, Upload, Zap, Shield, Gift } from 'lucide-react';
@@ -94,7 +94,7 @@ const Index = () => {
           <section className="border-b-4 border-black bg-secondary">
             <div className="container mx-auto px-4 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
               <div>
-                <div className="inline-block chip-listing chip-direct mb-4">Video First Marketplace</div>
+                <div className="inline-block chip-listing chip-direct mb-4">See It. Shop It. Tap Buy.</div>
                 <h1 className="font-display text-5xl md:text-7xl leading-[0.95] text-foreground mb-6">
                   See it.<br />
                   <span className="bg-foreground text-background px-3">Shop it.</span><br />
@@ -158,7 +158,7 @@ const Index = () => {
           )}
 
           <div className="my-6">
-            <AdBanner type="horizontal" />
+            {/* Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
           </div>
 
           {/* FEED */}
@@ -252,7 +252,7 @@ const Index = () => {
           )}
 
           <div className="my-12">
-            <AdBanner type="horizontal" />
+            {/* Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
           </div>
         </div>
       </main>

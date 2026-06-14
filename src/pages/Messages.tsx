@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import AdBanner from '@/components/AdBanner';
+import MessagePreview from '@/components/MessagePreview';
 import MessagePreview from '@/components/MessagePreview';
 import { messages, Message } from '@/data/products';
 import { Input } from '@/components/ui/input';
@@ -226,10 +226,8 @@ const Messages = () => {
           </div>
         </div>
         
-        {/* Ad Banner */}
-        <div className="mt-6">
-          <AdBanner type="horizontal" />
-        </div>
+        {/* Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
+        {/* <div className="mt-6"><AdBanner type="horizontal" /></div> */}
       </main>
       
       <Footer />
