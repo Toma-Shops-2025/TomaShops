@@ -45,7 +45,7 @@ const MyListings = () => {
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold">My Listings</h1>
+          <h1 className="font-display text-5xl md:text-6xl leading-none drop-shadow-[3px_3px_0px_#ff5722]">My Listings</h1>
           <Button asChild className="bg-brand-gradient hover:opacity-90">
             <Link to="/create-listing">
               <Upload className="h-4 w-4 mr-1" /> New Listing
