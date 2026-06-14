@@ -34,6 +34,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { Upload, X, Image, Video } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const listingSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters" }).max(100),
@@ -275,6 +276,7 @@ const CreateListing = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="mb-4"><BackButton /></div>
           <div className="max-w-3xl mx-auto">
             <h1 className="font-display text-5xl md:text-6xl leading-none mb-8 drop-shadow-[3px_3px_0px_#ff5722]">New Listing</h1>
             

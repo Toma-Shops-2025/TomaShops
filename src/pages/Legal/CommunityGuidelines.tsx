@@ -1,10 +1,12 @@
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
+import BackButton from '@/components/BackButton';
 
 const CommunityGuidelines = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
     <main className="flex-1 container mx-auto px-4 py-10 max-w-3xl prose prose-lg">
+        <div className="mb-4"><BackButton /></div>
       <h1 className="text-3xl font-bold mb-6">Community guidelines</h1>
       <p>TomaShops is a marketplace built on trust. By using the platform, you agree to follow these rules.</p>
 

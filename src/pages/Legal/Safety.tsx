@@ -1,10 +1,12 @@
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
+import BackButton from '@/components/BackButton';
 
 const Safety = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
     <main className="flex-1 container mx-auto px-4 py-10 max-w-3xl prose prose-lg">
+        <div className="mb-4"><BackButton /></div>
       <h1 className="text-3xl font-bold mb-6">Safety tips</h1>
       <h2 className="text-xl font-semibold mt-6 mb-3">For buyers</h2>
       <ul className="list-disc pl-5 space-y-1">

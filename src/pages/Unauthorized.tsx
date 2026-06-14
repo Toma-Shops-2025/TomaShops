@@ -4,12 +4,14 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ShieldAlert, Home, ArrowLeft } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const Unauthorized = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mb-4"><BackButton /></div>
         <div className="w-full max-w-md text-center space-y-8">
           <div className="mx-auto w-20 h-20 bg-destructive/20 rounded-full flex items-center justify-center mb-4">
             <ShieldAlert className="h-10 w-10 text-destructive" />

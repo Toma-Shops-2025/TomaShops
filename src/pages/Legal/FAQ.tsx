@@ -1,6 +1,7 @@
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import BackButton from '@/components/BackButton';
 
 const faqs = [
   { q: 'What is TomaShops?', a: 'TomaShops is a video-first marketplace. Every listing includes a short video so you can see the item before you buy.' },
@@ -16,6 +17,7 @@ const FAQ = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
     <main className="flex-1 container mx-auto px-4 py-10 max-w-3xl">
+        <div className="mb-4"><BackButton /></div>
       <h1 className="text-3xl font-bold mb-2">Frequently asked questions</h1>
       <p className="text-muted-foreground mb-8">Quick answers to the most common questions.</p>
       <Accordion type="single" collapsible className="w-full">
