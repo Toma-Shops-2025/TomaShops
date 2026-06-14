@@ -34,6 +34,10 @@ interface Product {
   status: string;
   views: number;
   favorites: number;
+  listing_type?: 'direct' | 'affiliate' | 'dropship' | null;
+  external_url?: string | null;
+  affiliate_network?: string | null;
+  disclosure?: string | null;
   seller: {
     id: string;
     full_name: string | null;
