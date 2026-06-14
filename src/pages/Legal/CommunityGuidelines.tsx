@@ -32,7 +32,7 @@ const CommunityGuidelines = () => (
       <h2 className="text-xl font-semibold mt-6 mb-3">Reporting & enforcement</h2>
       <p>Use the Report button on any listing, profile, or message. Violations can result in listing removal, account suspension, or permanent ban. You can also block any user from their profile page.</p>
 
-      <p className="mt-6">Questions? <a href="mailto:contactus@tomashops.online" className="text-primary">contactus@tomashops.online</a></p>
+      <p className="mt-6">Questions? <a href="mailto:contactus@tomashops.shop" className="text-primary">contactus@tomashops.shop</a></p>
     </main>
     <Footer />
   </div>

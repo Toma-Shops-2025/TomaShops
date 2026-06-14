@@ -22,7 +22,7 @@ const Safety = () => (
         <li>Communicate only through TomaShops messages.</li>
       </ul>
       <h2 className="text-xl font-semibold mt-6 mb-3">Report anything suspicious</h2>
-      <p>Use the Report button on any listing or profile, or email <a href="mailto:contactus@tomashops.online" className="text-primary">contactus@tomashops.online</a>.</p>
+      <p>Use the Report button on any listing or profile, or email <a href="mailto:contactus@tomashops.shop" className="text-primary">contactus@tomashops.shop</a>.</p>
     </main>
     <Footer />
   </div>

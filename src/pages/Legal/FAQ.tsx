@@ -9,7 +9,7 @@ const faqs = [
   { q: 'How do I list an item?', a: 'Create an account, switch your profile to seller, then tap "List an Item" and upload a short video plus the item details.' },
   { q: 'How do payments work?', a: 'Payments are processed securely through our payment partner. Funds are released to the seller once delivery is confirmed.' },
   { q: 'What can I do if I have a problem with a user?', a: 'Use the Report button on any listing or profile, or block the user from their profile. Our trust & safety team reviews every report.' },
-  { q: 'How do I delete my account?', a: 'Email contactus@tomashops.online from your account email and we\'ll permanently delete your account within 30 days.' },
+  { q: 'How do I delete my account?', a: 'Email contactus@tomashops.shop from your account email and we\'ll permanently delete your account within 30 days.' },
   { q: 'Is TomaShops available outside the US?', a: 'We\'re rolling out region by region. Join the waitlist on our homepage to be notified when we launch in your country.' },
 ];
 
@@ -29,7 +29,7 @@ const FAQ = () => (
         ))}
       </Accordion>
       <p className="mt-8 text-sm text-muted-foreground">
-        Still stuck? <a href="mailto:contactus@tomashops.online" className="text-primary underline">contactus@tomashops.online</a>
+        Still stuck? <a href="mailto:contactus@tomashops.shop" className="text-primary underline">contactus@tomashops.shop</a>
       </p>
     </main>
     <Footer />
