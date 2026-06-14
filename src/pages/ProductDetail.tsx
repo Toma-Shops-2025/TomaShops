@@ -408,8 +408,8 @@ const ProductDetail = () => {
                 </div>
               </div>
               
-              <div className="px-4 pb-4 flex justify-between items-center">
-                <h1 className="text-xl font-bold">{product.title}</h1>
+              <div className="px-4 pb-4 flex justify-between items-center gap-3">
+                <h1 className="font-display text-3xl md:text-4xl leading-tight">{product.title}</h1>
                 <div className="flex space-x-2">
                   <Button size="sm" variant="ghost" className="text-muted-foreground" onClick={handleShareProduct}>
                     <Share className="h-4 w-4 mr-1" /> Share
