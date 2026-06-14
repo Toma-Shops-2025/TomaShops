@@ -562,54 +562,60 @@ const ProductDetail = () => {
           
           {/* Product Action and Details */}
           <div className="lg:col-span-1">
-            <div className="bg-card border rounded-lg p-4 sticky top-20">
-              <div className="mb-4 pb-4 border-b">
-                <div className="flex justify-between items-center mb-2">
-                  <h2 className="text-2xl font-bold">${product.price.toFixed(2)}</h2>
-                  <Badge variant="outline" className="text-primary border-primary">
-                    {product.condition}
-                  </Badge>
+            <div className="bg-background border-4 border-black brutal-shadow-lg p-5 sticky top-24">
+              <div className="mb-4 pb-4 border-b-2 border-black">
+                <div className="flex justify-between items-end mb-2 gap-2">
+                  <span className="font-display text-5xl leading-none text-foreground">${product.price.toFixed(0)}</span>
+                  <span className="chip-listing chip-direct">{product.condition}</span>
                 </div>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  Listed on {new Date(product.datePosted).toLocaleDateString()}
+                <div className="flex items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+                  Listed {new Date(product.datePosted).toLocaleDateString()}
                 </div>
               </div>
-              
+
+              <div className="mb-4">
+                <span className={
+                  product.listing_type === 'affiliate' ? 'chip-listing chip-affiliate' :
+                  product.listing_type === 'dropship' ? 'chip-listing chip-dropship' :
+                  'chip-listing chip-direct'
+                }>
+                  {product.listing_type === 'affiliate' ? 'Affiliate' : product.listing_type === 'dropship' ? 'Dropship' : 'Direct'}
+                  {product.affiliate_network ? ` · ${product.affiliate_network}` : ''}
+                </span>
+              </div>
+
               {(product.listing_type === 'affiliate' || product.listing_type === 'dropship') && (
-                <div className="mb-3 p-3 rounded-md border border-primary/30 bg-primary/5 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Badge variant="outline" className="text-primary border-primary capitalize">
-                      {product.listing_type === 'affiliate' ? 'Affiliate Link' : 'Dropship'}
-                    </Badge>
-                    {product.affiliate_network && (
-                      <span className="font-medium">via {product.affiliate_network}</span>
-                    )}
-                  </div>
-                  <p>
-                    {product.disclosure ||
-                      'This listing contains an affiliate link. TomaShops or the seller may earn a commission, at no extra cost to you, if you make a purchase.'}
-                  </p>
+                <div className="mb-4 p-3 bg-secondary border-2 border-black text-[11px] font-bold leading-snug">
+                  {product.disclosure ||
+                    'This listing contains an affiliate link. TomaShops or the seller may earn a commission, at no extra cost to you.'}
                 </div>
               )}
 
               <div className="space-y-3">
-                <Button className="w-full" onClick={handleBuyNow}>
+                <Button
+                  className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary rounded-none border-4 border-black font-black uppercase tracking-widest text-base brutal-shadow brutal-press"
+                  onClick={handleBuyNow}
+                >
                   {product.listing_type === 'affiliate' || product.listing_type === 'dropship'
-                    ? `Buy on ${product.affiliate_network || 'external site'}`
+                    ? `Buy on ${product.affiliate_network || 'External Site'} →`
                     : 'Buy Now'}
                 </Button>
 
                 {product.listing_type === 'direct' && (
-                  <Button variant="outline" className="w-full" onClick={handleMakeOffer}>
+                  <Button
+                    variant="outline"
+                    className="w-full h-12 bg-background text-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press"
+                    onClick={handleMakeOffer}
+                  >
                     Make Offer
                   </Button>
                 )}
 
-                <Button variant="secondary" className="w-full flex items-center justify-center" onClick={handleStartConversation}>
+                <Button
+                  variant="secondary"
+                  className="w-full h-12 bg-secondary text-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press flex items-center justify-center"
+                  onClick={handleStartConversation}
+                >
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Message Seller
                 </Button>
