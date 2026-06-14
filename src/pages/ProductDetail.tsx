@@ -231,13 +231,26 @@ const ProductDetail = () => {
     }
   };
   
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
+    if (!product) return;
+    const isExternal = product.listing_type === 'affiliate' || product.listing_type === 'dropship';
+
+    if (isExternal && product.external_url) {
+      // Log click (fire-and-forget; allowed for anon + authenticated)
+      supabase.from('product_clicks' as any).insert({
+        product_id: product.id,
+        user_id: user?.id ?? null,
+        referrer: typeof document !== 'undefined' ? document.referrer : null,
+      } as any).then(() => {}, () => {});
+      window.open(product.external_url, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     if (!user) {
       toast.error("Please log in to purchase items");
       navigate('/auth/login');
       return;
     }
-    
     setShowPaymentModal(true);
   };
   
