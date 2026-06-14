@@ -25,7 +25,7 @@ const AdBanner = ({ type }: AdBannerProps) => {
     <div className={`ad-container ${className} ${height}`}>
       <div className="text-center">
         <p className="font-medium">Advertisement Space</p>
-        <p className="text-xs mt-1">Google AdSense</p>
+        <p className="text-xs mt-1">Google AdMob</p>
       </div>
     </div>
   );

@@ -43,7 +43,7 @@ const listingSchema = z.object({
   }),
   category: z.string().min(1, { message: "Please select a category" }),
   condition: z.string().min(1, { message: "Please select the condition" }),
-  location: z.string().min(3, { message: "Location must be at least 3 characters" }),
+  
   listing_type: z.enum(['direct', 'affiliate', 'dropship']),
   external_url: z.string().trim().max(2000).optional().or(z.literal('')),
   affiliate_network: z.string().trim().max(50).optional().or(z.literal('')),
@@ -75,7 +75,7 @@ const CreateListing = () => {
       price: "",
       category: "",
       condition: "",
-      location: "",
+      
       listing_type: "direct",
       external_url: "",
       affiliate_network: "",
@@ -245,7 +245,7 @@ const CreateListing = () => {
           price: parseFloat(values.price),
           category: values.category,
           condition: values.condition,
-          location: values.location,
+          location: '',
           seller_id: user?.id,
           thumbnailUrl,
           videoUrl,
@@ -554,19 +554,6 @@ const CreateListing = () => {
                       )}
                     />
                     
-                    <FormField
-                      control={form.control}
-                      name="location"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Location</FormLabel>
-                          <FormControl>
-                            <Input placeholder="e.g., New York, NY" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
                   
                   <FormField
