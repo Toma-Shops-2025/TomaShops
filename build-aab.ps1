@@ -57,9 +57,14 @@ try {
     bunx cap sync android
 
     Write-Host "[5/6] gradlew bundleRelease..." -ForegroundColor Cyan
+    $Gradlew = Join-Path $AndroidDir "gradlew.bat"
+    if (-not (Test-Path $Gradlew)) {
+        throw "gradlew.bat missing at $Gradlew. Run: Remove-Item android -Recurse -Force ; bunx cap add android ; bun run build ; bunx cap sync android"
+    }
     Push-Location $AndroidDir
     try {
-        .\gradlew.bat clean bundleRelease
+        & $Gradlew clean bundleRelease
+        if ($LASTEXITCODE -ne 0) { throw "gradle bundleRelease failed (exit $LASTEXITCODE)" }
     } finally {
         Pop-Location
     }
