@@ -141,16 +141,52 @@ export type Database = {
           },
         ]
       }
+      product_clicks: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          referrer: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          referrer?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          referrer?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_clicks_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
+          affiliate_network: string | null
           category: string
           condition: string
           created_at: string
           datePosted: string
           description: string
+          disclosure: string | null
+          external_url: string | null
           favorites: number
           id: string
           imageUrls: string[] | null
+          listing_type: string
           location: string
           price: number
           seller_id: string
@@ -161,14 +197,18 @@ export type Database = {
           views: number
         }
         Insert: {
+          affiliate_network?: string | null
           category: string
           condition: string
           created_at?: string
           datePosted?: string
           description: string
+          disclosure?: string | null
+          external_url?: string | null
           favorites?: number
           id?: string
           imageUrls?: string[] | null
+          listing_type?: string
           location: string
           price: number
           seller_id: string
@@ -179,14 +219,18 @@ export type Database = {
           views?: number
         }
         Update: {
+          affiliate_network?: string | null
           category?: string
           condition?: string
           created_at?: string
           datePosted?: string
           description?: string
+          disclosure?: string | null
+          external_url?: string | null
           favorites?: number
           id?: string
           imageUrls?: string[] | null
+          listing_type?: string
           location?: string
           price?: number
           seller_id?: string
