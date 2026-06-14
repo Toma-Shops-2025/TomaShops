@@ -252,7 +252,11 @@ const CreateListing = () => {
           imageUrls,
           datePosted: new Date().toISOString(),
           status: 'active',
-        });
+          listing_type: values.listing_type,
+          external_url: values.listing_type === 'direct' ? null : (values.external_url || null),
+          affiliate_network: values.listing_type === 'direct' ? null : (values.affiliate_network || null),
+          disclosure: values.disclosure || null,
+        } as any);
       
       if (error) throw error;
       
