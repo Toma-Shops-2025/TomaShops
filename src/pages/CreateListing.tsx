@@ -44,7 +44,14 @@ const listingSchema = z.object({
   category: z.string().min(1, { message: "Please select a category" }),
   condition: z.string().min(1, { message: "Please select the condition" }),
   location: z.string().min(3, { message: "Location must be at least 3 characters" }),
-});
+  listing_type: z.enum(['direct', 'affiliate', 'dropship']),
+  external_url: z.string().trim().max(2000).optional().or(z.literal('')),
+  affiliate_network: z.string().trim().max(50).optional().or(z.literal('')),
+  disclosure: z.string().trim().max(500).optional().or(z.literal('')),
+}).refine(
+  (d) => d.listing_type === 'direct' || (d.external_url && /^https?:\/\//i.test(d.external_url)),
+  { message: 'A valid http(s) URL is required for affiliate/dropship listings', path: ['external_url'] }
+);
 
 const categories = ["Electronics", "Fashion", "Home & Garden", "Sports", "Music", "Toys", "Books", "Automotive", "Other"];
 const conditions = ["New", "Like New", "Good", "Fair", "Salvage"];
