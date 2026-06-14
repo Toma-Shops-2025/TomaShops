@@ -374,6 +374,98 @@ const CreateListing = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
+                    name="listing_type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Listing Type</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select listing type" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="direct">Direct — buyers contact me through TomaShops</SelectItem>
+                            <SelectItem value="affiliate">Affiliate — buyers click out to my affiliate link</SelectItem>
+                            <SelectItem value="dropship">Dropship — buyers click out to my store / supplier</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormDescription>
+                          Affiliate & dropship listings send the buyer to an external site when they tap Buy.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {listingType !== 'direct' && (
+                    <div className="space-y-6 p-4 border rounded-lg bg-muted/30">
+                      <FormField
+                        control={form.control}
+                        name="external_url"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>External Buy URL</FormLabel>
+                            <FormControl>
+                              <Input placeholder="https://amazon.com/dp/..." {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              The full https:// link buyers will be sent to when they tap Buy.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="affiliate_network"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Network / Store (optional)</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="e.g. Amazon, AliExpress, Shopify" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {['Amazon','AliExpress','eBay','Walmart','Shopify','Etsy','Other'].map(n => (
+                                  <SelectItem key={n} value={n}>{n}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="disclosure"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Custom Disclosure (optional)</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="As an Amazon Associate I earn from qualifying purchases."
+                                className="h-20"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormDescription>
+                              We'll automatically show an FTC affiliate disclosure. Add custom text here if you'd like.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        By posting, you confirm you have the rights to this video and external link, and that the link complies with FTC affiliate disclosure rules.
+                      </p>
+                    </div>
+                  )}
+
+                  <FormField
+                    control={form.control}
                     name="title"
                     render={({ field }) => (
                       <FormItem>
