@@ -6,7 +6,6 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
-import AdBanner from '@/components/AdBanner';
 import FeaturedProducts from '@/components/FeaturedProducts';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -556,10 +555,8 @@ const ProductDetail = () => {
               </Tabs>
             </div>
             
-            {/* Bottom Ad Banner */}
-            <div className="mt-6">
-              <AdBanner type="horizontal" />
-            </div>
+            {/* Bottom Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
+            {/* <div className="mt-6"><AdBanner type="horizontal" /></div> */}
           </div>
           
           {/* Product Action and Details */}
@@ -651,10 +648,8 @@ const ProductDetail = () => {
                 </div>
               </div>
               
-              {/* Side Ad Banner */}
-              <div className="mt-6">
-                <AdBanner type="square" />
-              </div>
+              {/* Side Ad placeholder removed for initial release — AdMob integration coming v1.1 */}
+              {/* <div className="mt-6"><AdBanner type="square" /></div> */}
             </div>
           </div>
         </div>
