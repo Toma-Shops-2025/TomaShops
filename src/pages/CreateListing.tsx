@@ -76,8 +76,14 @@ const CreateListing = () => {
       category: "",
       condition: "",
       location: "",
+      listing_type: "direct",
+      external_url: "",
+      affiliate_network: "",
+      disclosure: "",
     },
   });
+
+  const listingType = form.watch('listing_type');
 
   const handleVideoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
