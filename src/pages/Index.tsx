@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PlayCircle, X } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import heroPromo from '@/assets/hero-promo.mp4.asset.json';
 
 interface Product {
   id: string;
@@ -116,13 +117,15 @@ const Index = () => {
                 </div>
               </div>
               <div className="md:w-1/2 relative">
-                <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-border max-w-md mx-auto">
-                  <img src="/placeholder.svg" alt="Video shopping experience" className="w-full h-auto" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="rounded-full bg-background/80 p-3">
-                      <PlayCircle className="h-12 w-12 text-primary" />
-                    </div>
-                  </div>
+                <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-border max-w-md mx-auto aspect-square bg-black">
+                  <video
+                    src={heroPromo.url}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>
