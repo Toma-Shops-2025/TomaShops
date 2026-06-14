@@ -2,124 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =====================================================
+   TomaShops — Brutalist Pop design system
+   Palette: #ffffff / #0a0a0a / #ff5722 / #ffeb3b
+   Type:    Tradewinds (display) + Space Grotesk (body)
+   ===================================================== */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 18% 10%;
+    /* surfaces */
+    --background: 0 0% 100%;          /* #ffffff */
+    --foreground: 0 0% 4%;            /* #0a0a0a */
 
     --card: 0 0% 100%;
-    --card-foreground: 240 18% 10%;
+    --card-foreground: 0 0% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 18% 10%;
+    --popover-foreground: 0 0% 4%;
 
-    /* Vibrant coral — the hook */
-    --primary: 351 100% 62%;
+    /* loud orange */
+    --primary: 14 100% 57%;            /* #ff5722 */
     --primary-foreground: 0 0% 100%;
 
-    /* Deep magenta — the accent energy */
-    --secondary: 282 100% 57%;
-    --secondary-foreground: 0 0% 100%;
+    /* acid yellow */
+    --secondary: 54 100% 61%;          /* #ffeb3b */
+    --secondary-foreground: 0 0% 4%;
 
-    --muted: 240 20% 97%;
-    --muted-foreground: 240 6% 45%;
+    --muted: 0 0% 94%;                 /* #f0f0f0 */
+    --muted-foreground: 0 0% 25%;
 
-    --accent: 351 100% 96%;
-    --accent-foreground: 351 80% 32%;
+    --accent: 54 100% 61%;
+    --accent-foreground: 0 0% 4%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 10% 92%;
-    --input: 240 10% 92%;
-    --ring: 351 100% 62%;
+    --border: 0 0% 4%;                 /* black borders by default */
+    --input: 0 0% 4%;
+    --ring: 14 100% 57%;
 
-    --radius: 0.75rem;
+    --radius: 0px;                     /* brutalist: no rounded corners */
 
-    /* Signature gradient */
-    --gradient-brand: linear-gradient(135deg, hsl(351 100% 62%), hsl(282 100% 57%));
-    --shadow-brand: 0 12px 32px -12px hsl(351 100% 62% / 0.45);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 351 100% 62%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 4%;
+    --sidebar-primary: 14 100% 57%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 351 100% 62%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 4%;
+    --sidebar-border: 0 0% 4%;
+    --sidebar-ring: 14 100% 57%;
   }
 
+  /* No dark variant — Brutalist Pop is light-mode only. Map dark tokens to the same values
+     so legacy `.dark` markup still renders correctly. */
   .dark {
-    --background: 240 18% 7%;
-    --foreground: 0 0% 98%;
-    --card: 240 18% 9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 18% 9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 351 100% 62%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 14 100% 57%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 282 100% 57%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 10% 16%;
-    --muted-foreground: 240 5% 65%;
-    --accent: 240 10% 16%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 45%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 10% 18%;
-    --input: 240 10% 18%;
-    --ring: 351 100% 62%;
-    --sidebar-background: 240 18% 9%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 351 100% 62%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 10% 16%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 240 10% 18%;
-    --sidebar-ring: 351 100% 62%;
+    --secondary: 54 100% 61%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 25%;
+    --accent: 54 100% 61%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 4%;
+    --input: 0 0% 4%;
+    --ring: 14 100% 57%;
   }
 }
 
 @layer base {
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
+  * {
+    @apply border-border;
+  }
+  html, body {
+    font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    @apply bg-background text-foreground antialiased;
+  }
+  h1, h2, h3 {
+    letter-spacing: -0.01em;
+  }
 }
 
 @layer utilities {
-  .bg-brand-gradient { background: var(--gradient-brand); }
-  .text-brand-gradient {
-    background: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .font-display {
+    font-family: 'Tradewinds', cursive;
+    font-weight: 400;
   }
-  .shadow-brand { box-shadow: var(--shadow-brand); }
+  .brutal-border  { @apply border-4 border-black; }
+  .brutal-border-2 { @apply border-2 border-black; }
+  .brutal-shadow      { box-shadow: 4px 4px 0 0 #0a0a0a; }
+  .brutal-shadow-lg   { box-shadow: 8px 8px 0 0 #0a0a0a; }
+  .brutal-shadow-xl   { box-shadow: 16px 16px 0 0 #0a0a0a; }
+  .brutal-shadow-orange { box-shadow: 8px 8px 0 0 #ff5722; }
+  .brutal-shadow-yellow { box-shadow: 8px 8px 0 0 #ffeb3b; }
+  .brutal-press {
+    @apply transition-transform;
+  }
+  .brutal-press:active {
+    transform: translate(2px, 2px);
+    box-shadow: none !important;
+  }
+
+  /* legacy aliases so old `.bg-brand-gradient` / `.text-brand-gradient` markup still renders on-palette */
+  .bg-brand-gradient {
+    background-color: #ff5722;
+    color: #ffffff;
+  }
+  .text-brand-gradient {
+    color: #ff5722;
+  }
+  .shadow-brand { box-shadow: 4px 4px 0 0 #0a0a0a; }
 }
 
-.video-thumbnail { position: relative; overflow: hidden; border-radius: 0.5rem; }
-.video-thumbnail::before {
-  content: ''; position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%); width: 3rem; height: 3rem;
-  background-color: rgba(0,0,0,0.5); border-radius: 50%; z-index: 1;
+/* Listing-type chip recipe */
+.chip-listing {
+  @apply inline-flex items-center gap-1 border-2 border-black px-3 py-1 text-[10px] font-black uppercase tracking-widest;
+  box-shadow: 2px 2px 0 0 #0a0a0a;
 }
-.video-thumbnail::after {
-  content: ''; position: absolute; top: 50%; left: 55%;
-  transform: translate(-50%, -50%); width: 0; height: 0;
-  border-top: 0.75rem solid transparent; border-bottom: 0.75rem solid transparent;
-  border-left: 1rem solid white; z-index: 2;
-}
+.chip-direct   { background: #0a0a0a; color: #ffffff; }
+.chip-affiliate{ background: #ff5722; color: #0a0a0a; }
+.chip-dropship { background: #ffeb3b; color: #0a0a0a; }
+
+/* Video thumbnail — no more overlay smudge/play icon */
+.video-thumbnail { position: relative; overflow: hidden; }
 
 .message-unread { position: relative; }
 .message-unread::after {
   content: ''; position: absolute; top: 0.75rem; right: 0.75rem;
   width: 0.75rem; height: 0.75rem;
-  background-color: hsl(var(--primary)); border-radius: 50%;
+  background-color: #ff5722; border: 2px solid #0a0a0a;
 }
 
 .ad-container {
   display: flex; align-items: center; justify-content: center;
-  background-color: hsl(var(--muted)); color: hsl(var(--muted-foreground));
-  border: 1px dashed hsl(var(--border)); border-radius: var(--radius);
+  background-color: #ffffff; color: #0a0a0a;
+  border: 4px solid #0a0a0a;
   padding: 1rem; margin: 1rem 0; text-align: center;
+  box-shadow: 4px 4px 0 0 #0a0a0a;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }

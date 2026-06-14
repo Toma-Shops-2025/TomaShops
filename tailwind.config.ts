@@ -64,12 +64,15 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
                 toma: {
-                    purple: '#FF3D5A',
-                    'purple-dark': '#B026FF',
-                    'purple-light': '#FFE4E9',
-                    'gray-light': '#FAFAFB',
-                    'gray-dark': '#0F0F1A',
+                    orange: '#ff5722',
+                    yellow: '#ffeb3b',
+                    black: '#0a0a0a',
+                    paper: '#f0f0f0',
                 }
+			},
+			fontFamily: {
+				display: ['Tradewinds', 'cursive'],
+				sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

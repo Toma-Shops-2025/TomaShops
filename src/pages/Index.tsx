@@ -1,17 +1,14 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
-import FeaturedProducts from '@/components/FeaturedProducts';
 import AdBanner from '@/components/AdBanner';
 import VideoProductCard from '@/components/VideoProductCard';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PlayCircle, X } from 'lucide-react';
+import { X, Upload, Zap, Shield, Gift } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import heroPromo from '@/assets/hero-promo.mp4.asset.json';
 
 interface Product {
   id: string;
@@ -29,6 +26,8 @@ interface Product {
   status: string;
   views: number;
   favorites: number;
+  listing_type?: 'direct' | 'affiliate' | 'dropship' | null;
+  affiliate_network?: string | null;
   seller?: {
     id: string;
     full_name: string | null;
@@ -37,9 +36,17 @@ interface Product {
   } | null;
 }
 
+const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home & Garden', 'Sports', 'Music'];
+const LISTING_FILTERS: Array<{ key: 'all' | 'direct' | 'affiliate' | 'dropship'; label: string }> = [
+  { key: 'all', label: 'All' },
+  { key: 'direct', label: 'Direct' },
+  { key: 'affiliate', label: 'Affiliate' },
+  { key: 'dropship', label: 'Dropship' },
+];
+
 const Index = () => {
-  const categories = ['All', 'Electronics', 'Fashion', 'Home & Garden', 'Sports', 'Music'];
   const [activeCategory, setActiveCategory] = useState('All');
+  const [listingFilter, setListingFilter] = useState<'all' | 'direct' | 'affiliate' | 'dropship'>('all');
   const [params, setParams] = useSearchParams();
   const searchQuery = params.get('q') ?? '';
 
@@ -50,16 +57,10 @@ const Index = () => {
         .from('products')
         .select(`
           *,
-          seller:profiles!products_seller_id_fkey(
-            id,
-            full_name,
-            avatar_url,
-            rating
-          )
+          seller:profiles!products_seller_id_fkey(id, full_name, avatar_url, rating)
         `)
         .eq('status', 'active')
         .order('datePosted', { ascending: false });
-
       if (error) throw error;
       return data as unknown as Product[];
     },
@@ -71,214 +72,206 @@ const Index = () => {
     if (!q) return products;
     return products.filter((p) =>
       [p.title, p.description, p.category, p.location, p.seller?.full_name ?? '']
-        .join(' ')
-        .toLowerCase()
-        .includes(q)
+        .join(' ').toLowerCase().includes(q)
     );
   }, [products, searchQuery]);
 
-  const filteredProducts =
-    activeCategory === 'All'
-      ? searchFiltered
-      : searchFiltered.filter((p) => p.category === activeCategory);
-
-  const featuredProducts = searchFiltered.slice(0, 3);
-  const newArrivals = searchFiltered.slice(0, 3);
+  const filtered = searchFiltered.filter((p) =>
+    (activeCategory === 'All' || p.category === activeCategory) &&
+    (listingFilter === 'all' || (p.listing_type ?? 'direct') === listingFilter)
+  );
 
   if (error) console.error('Error loading products:', error);
-
-  const clearSearch = () => {
-    params.delete('q');
-    setParams(params);
-  };
+  const clearSearch = () => { params.delete('q'); setParams(params); };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
 
-      <main className="flex-1 container mx-auto px-4">
+      <main className="flex-1">
+        {/* HERO — brutalist stamp */}
         {!searchQuery && (
-          <section className="py-8 md:py-12 my-4 bg-gradient-to-r from-secondary/20 to-primary/10 rounded-xl">
-            <div className="container mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center">
-              <div className="md:w-1/2 mb-8 md:mb-0">
-                <h1 className="text-3xl md:text-5xl font-bold mb-4 text-foreground">
-                  <span className="text-primary">Video First</span> Shopping Experience
+          <section className="border-b-4 border-black bg-secondary">
+            <div className="container mx-auto px-4 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
+              <div>
+                <div className="inline-block chip-listing chip-direct mb-4">Video First Marketplace</div>
+                <h1 className="font-display text-5xl md:text-7xl leading-[0.95] text-foreground mb-6">
+                  See it.<br />
+                  <span className="bg-foreground text-background px-3">Shop it.</span><br />
+                  <span className="text-primary drop-shadow-[3px_3px_0px_#0a0a0a]">Tap buy.</span>
                 </h1>
-                <p className="text-lg mb-6 text-muted-foreground max-w-lg">
-                  Discover products through authentic videos from real sellers. Shop confidently with our video-focused marketplace.
+                <p className="text-base md:text-lg font-bold uppercase tracking-wide max-w-md mb-8">
+                  Every listing is a video. Direct sellers, affiliate links, dropship stores — one feed, zero fluff.
                 </p>
-                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-                    <a href="#browse">Start Shopping</a>
+                <div className="flex flex-wrap gap-4">
+                  <Button asChild size="lg" className="bg-foreground text-background hover:bg-primary hover:text-primary-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow-lg brutal-press text-base h-14 px-8">
+                    <a href="#feed">Start Watching →</a>
                   </Button>
-                  <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                    <Link to="/create-listing">Sell Your Items</Link>
+                  <Button asChild size="lg" variant="outline" className="bg-background text-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press text-base h-14 px-8">
+                    <Link to="/create-listing"><Upload className="h-4 w-4 mr-2" /> Sell Your Stuff</Link>
                   </Button>
                 </div>
               </div>
-              <div className="md:w-1/2 relative">
-                <div className="relative rounded-lg overflow-hidden shadow-xl border-4 border-border max-w-md mx-auto aspect-square bg-black">
-                  <video
-                    src={heroPromo.url}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                  />
+
+              {/* phone frame mock */}
+              <div className="relative mx-auto w-full max-w-[320px]">
+                <div className="aspect-[9/16] bg-foreground border-4 border-black brutal-shadow-xl relative overflow-hidden">
+                  {searchFiltered[0]?.videoUrl ? (
+                    <video src={searchFiltered[0].videoUrl} autoPlay loop muted playsInline className="w-full h-full object-cover opacity-90" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-24 h-24 border-8 border-secondary rounded-full flex items-center justify-center animate-pulse">
+                        <div className="w-0 h-0 border-t-[15px] border-t-transparent border-l-[25px] border-l-secondary border-b-[15px] border-b-transparent ml-2" />
+                      </div>
+                    </div>
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <span className="chip-listing chip-affiliate">Affiliate</span>
+                  </div>
+                  <div className="absolute right-3 bottom-32 flex flex-col gap-3">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="w-11 h-11 bg-background border-2 border-black brutal-shadow flex items-center justify-center text-foreground">
+                        <Zap className="h-5 w-5" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-foreground/95 to-transparent">
+                    <p className="font-display text-2xl text-background drop-shadow-[2px_2px_0px_#ff5722]">$129</p>
+                    <p className="text-background text-xs font-black uppercase tracking-wider">@retro_curator</p>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
         )}
 
-        {searchQuery && (
-          <div className="my-6 flex items-center justify-between bg-muted/40 px-4 py-3 rounded-lg">
-            <p className="text-sm">
-              Showing results for <span className="font-semibold">"{searchQuery}"</span> —{' '}
-              {searchFiltered.length} match{searchFiltered.length === 1 ? '' : 'es'}
-            </p>
-            <Button variant="ghost" size="sm" onClick={clearSearch}>
-              <X className="h-4 w-4 mr-1" /> Clear
-            </Button>
+        <div className="container mx-auto px-4">
+          {searchQuery && (
+            <div className="my-6 flex items-center justify-between bg-secondary border-4 border-black brutal-shadow px-4 py-3">
+              <p className="text-sm font-bold uppercase tracking-wide">
+                Results for <span className="bg-foreground text-background px-2">"{searchQuery}"</span> · {searchFiltered.length}
+              </p>
+              <Button variant="ghost" size="sm" onClick={clearSearch} className="font-black uppercase">
+                <X className="h-4 w-4 mr-1" /> Clear
+              </Button>
+            </div>
+          )}
+
+          <div className="my-6">
+            <AdBanner type="horizontal" />
           </div>
-        )}
 
-        <AdBanner type="horizontal" />
+          {/* FEED */}
+          <section id="feed" className="my-8 scroll-mt-20">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-6 border-b-4 border-black pb-4">
+              <div>
+                <h2 className="font-display text-4xl md:text-5xl leading-none">The Feed</h2>
+                <p className="text-xs font-black uppercase tracking-widest mt-2 text-muted-foreground">
+                  {filtered.length} live {filtered.length === 1 ? 'listing' : 'listings'}
+                </p>
+              </div>
 
-        {!searchQuery && (
-          isLoading ? (
-            <div className="my-8">
-              <Skeleton className="h-8 w-48 mb-6" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="border rounded-lg overflow-hidden">
-                    <Skeleton className="w-full h-48" />
+              <div className="flex flex-wrap gap-2">
+                {LISTING_FILTERS.map((f) => (
+                  <button
+                    key={f.key}
+                    onClick={() => setListingFilter(f.key)}
+                    className={`px-4 py-2 border-2 border-black font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
+                      listingFilter === f.key ? 'bg-foreground text-background brutal-shadow' : 'bg-background text-foreground hover:bg-secondary'
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mb-6">
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setActiveCategory(c)}
+                  className={`px-3 py-1.5 border-2 border-black font-bold uppercase text-[11px] tracking-widest brutal-press transition-colors ${
+                    activeCategory === c ? 'bg-primary text-primary-foreground brutal-shadow' : 'bg-background text-foreground hover:bg-secondary'
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {isLoading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {[1,2,3,4,5,6,7,8].map(i => (
+                  <div key={i} className="border-4 border-black bg-background brutal-shadow">
+                    <Skeleton className="w-full aspect-[4/5] rounded-none" />
                     <div className="p-4 space-y-2">
-                      <Skeleton className="h-4 w-3/4" />
-                      <Skeleton className="h-4 w-1/2" />
+                      <Skeleton className="h-4 w-3/4 rounded-none" />
+                      <Skeleton className="h-6 w-1/3 rounded-none" />
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          ) : featuredProducts.length > 0 ? (
-            <FeaturedProducts products={featuredProducts as any} title="Featured Products" />
-          ) : null
-        )}
-
-        <section id="browse" className="my-8 scroll-mt-20">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl md:text-2xl font-bold">
-              {searchQuery ? 'Search Results' : 'Browse by Category'}
-            </h2>
-          </div>
-
-          <Tabs defaultValue="All" className="w-full">
-            <TabsList className="w-full h-auto flex flex-wrap justify-start mb-4 bg-transparent">
-              {categories.map((category) => (
-                <TabsTrigger
-                  key={category}
-                  value={category}
-                  className="m-1 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            <TabsContent value={activeCategory}>
-              {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="border rounded-lg overflow-hidden">
-                      <Skeleton className="w-full h-36" />
-                      <div className="p-4 space-y-2">
-                        <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-4 w-1/2" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {filteredProducts.map((product) => (
-                    <div key={product.id} className="mb-4">
-                      <VideoProductCard product={product as any} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">
-                    {searchQuery
-                      ? `No products match "${searchQuery}"${activeCategory !== 'All' ? ` in ${activeCategory}` : ''}.`
-                      : 'No products found in this category.'}
-                  </p>
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
-        </section>
-
-        {!searchQuery && (
-          <div className="my-8 flex flex-col md:flex-row justify-between">
-            <div className="md:w-2/3 md:pr-4">
-              {isLoading ? (
-                <div className="mb-6">
-                  <Skeleton className="h-8 w-48 mb-4" />
-                </div>
-              ) : newArrivals.length > 0 ? (
-                <FeaturedProducts products={newArrivals as any} title="New Arrivals" />
-              ) : null}
-            </div>
-            <div className="md:w-1/3 md:pl-4 space-y-4">
-              <AdBanner type="vertical" />
-            </div>
-          </div>
-        )}
-
-        {!searchQuery && (
-          <section className="my-12 py-8 bg-muted/30 rounded-lg">
-            <h2 className="text-xl md:text-2xl font-bold text-center mb-8">Why Choose TomaShops?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
-                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
-                  <PlayCircle className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-bold mb-2">Video First</h3>
-                <p className="text-muted-foreground text-sm">See products in action before you buy with authentic videos from sellers.</p>
+            ) : filtered.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filtered.map((p) => (
+                  <VideoProductCard key={p.id} product={p as any} />
+                ))}
               </div>
-              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
-                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-                  </svg>
-                </div>
-                <h3 className="font-bold mb-2">Buyer Protection</h3>
-                <p className="text-muted-foreground text-sm">Shop confidently with our secure messaging and verification systems.</p>
+            ) : (
+              <div className="text-center py-20 border-4 border-dashed border-black bg-secondary/40">
+                <p className="font-display text-3xl mb-2">Nothing here yet.</p>
+                <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6">
+                  {searchQuery ? `No listings match "${searchQuery}".` : 'Be the first to drop one.'}
+                </p>
+                <Button asChild className="bg-primary text-primary-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press">
+                  <Link to="/create-listing"><Upload className="h-4 w-4 mr-2" /> List an item</Link>
+                </Button>
               </div>
-              <div className="bg-card p-6 rounded-lg shadow-sm text-center border">
-                <div className="mx-auto w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-                    <line x1="12" x2="12" y1="2" y2="22" />
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                  </svg>
-                </div>
-                <h3 className="font-bold mb-2">Free for Everyone</h3>
-                <p className="text-muted-foreground text-sm">No listing fees or commissions for sellers. Free to browse for buyers.</p>
-              </div>
-            </div>
+            )}
           </section>
-        )}
 
-        <AdBanner type="horizontal" />
+          {/* WHY TOMASHOPS */}
+          {!searchQuery && (
+            <section className="my-16 border-y-4 border-black py-12">
+              <h2 className="font-display text-4xl md:text-6xl mb-10 text-center">
+                Why <span className="bg-foreground text-background px-3">TomaShops</span>?
+              </h2>
+              <div className="grid md:grid-cols-3 gap-6">
+                <Why icon={<Zap className="h-7 w-7" />} title="Video First" bg="bg-primary" fg="text-primary-foreground">
+                  No more grainy photos. Every listing is a real video so you see exactly what you're getting.
+                </Why>
+                <Why icon={<Shield className="h-7 w-7" />} title="Three Ways To Sell" bg="bg-secondary" fg="text-foreground">
+                  Direct hand-off, affiliate links, or dropship store — one feed, three workflows.
+                </Why>
+                <Why icon={<Gift className="h-7 w-7" />} title="Free Forever" bg="bg-foreground" fg="text-background">
+                  No listing fees. No commissions. We run on ads so you can run your hustle.
+                </Why>
+              </div>
+            </section>
+          )}
+
+          <div className="my-12">
+            <AdBanner type="horizontal" />
+          </div>
+        </div>
       </main>
 
       <Footer />
     </div>
   );
 };
+
+const Why = ({
+  icon, title, children, bg, fg,
+}: { icon: React.ReactNode; title: string; children: React.ReactNode; bg: string; fg: string }) => (
+  <div className={`${bg} ${fg} border-4 border-black brutal-shadow-lg p-6`}>
+    <div className="w-12 h-12 bg-background text-foreground border-2 border-black flex items-center justify-center brutal-shadow mb-4">
+      {icon}
+    </div>
+    <h3 className="font-display text-2xl mb-2 leading-none">{title}</h3>
+    <p className="text-sm font-bold uppercase tracking-wide leading-snug">{children}</p>
+  </div>
+);
 
 export default Index;
