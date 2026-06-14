@@ -7,6 +7,7 @@ import { products } from '@/data/products';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Settings, Star, Package, Heart, Edit, ShoppingBag, Upload, Store } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("listings");
@@ -38,6 +39,7 @@ const Profile = () => {
       <Navbar />
       
       <main className="flex-1 container mx-auto px-4 py-6">
+        <div className="mb-4"><BackButton /></div>
         {/* Profile Header */}
         <div className="bg-card rounded-lg border p-6 mb-6">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">

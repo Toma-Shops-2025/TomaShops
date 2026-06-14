@@ -17,6 +17,7 @@ import { toast } from '@/components/ui/sonner';
 import PaymentProcessing from '@/components/PaymentProcessing';
 import ReportDialog from '@/components/ReportDialog';
 import BlockUserButton from '@/components/BlockUserButton';
+import BackButton from '@/components/BackButton';
 
 interface Product {
   id: string;
@@ -286,6 +287,7 @@ const ProductDetail = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1 container mx-auto px-4 py-6">
+        <div className="mb-4"><BackButton /></div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <Skeleton className="h-[400px] w-full rounded-lg" />

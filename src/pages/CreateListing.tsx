@@ -34,6 +34,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { Upload, X, Image, Video } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const listingSchema = z.object({
   title: z.string().min(5, { message: "Title must be at least 5 characters" }).max(100),
@@ -43,7 +44,7 @@ const listingSchema = z.object({
   }),
   category: z.string().min(1, { message: "Please select a category" }),
   condition: z.string().min(1, { message: "Please select the condition" }),
-  location: z.string().min(3, { message: "Location must be at least 3 characters" }),
+  
   listing_type: z.enum(['direct', 'affiliate', 'dropship']),
   external_url: z.string().trim().max(2000).optional().or(z.literal('')),
   affiliate_network: z.string().trim().max(50).optional().or(z.literal('')),
@@ -75,7 +76,7 @@ const CreateListing = () => {
       price: "",
       category: "",
       condition: "",
-      location: "",
+      
       listing_type: "direct",
       external_url: "",
       affiliate_network: "",
@@ -245,7 +246,7 @@ const CreateListing = () => {
           price: parseFloat(values.price),
           category: values.category,
           condition: values.condition,
-          location: values.location,
+          location: '',
           seller_id: user?.id,
           thumbnailUrl,
           videoUrl,
@@ -275,6 +276,7 @@ const CreateListing = () => {
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1 container mx-auto px-4 py-8">
+        <div className="mb-4"><BackButton /></div>
           <div className="max-w-3xl mx-auto">
             <h1 className="font-display text-5xl md:text-6xl leading-none mb-8 drop-shadow-[3px_3px_0px_#ff5722]">New Listing</h1>
             
@@ -554,19 +556,6 @@ const CreateListing = () => {
                       )}
                     />
                     
-                    <FormField
-                      control={form.control}
-                      name="location"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Location</FormLabel>
-                          <FormControl>
-                            <Input placeholder="e.g., New York, NY" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
                   
                   <FormField

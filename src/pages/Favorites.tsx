@@ -8,6 +8,7 @@ import VideoProductCard from '@/components/VideoProductCard';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Heart } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const Favorites = () => {
   const { user } = useAuth();
@@ -43,6 +44,7 @@ const Favorites = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-6">
+        <div className="mb-4"><BackButton /></div>
         <h1 className="text-2xl md:text-3xl font-bold mb-6">Your Favorites</h1>
 
         {isLoading ? (

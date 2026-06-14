@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Upload, Store, Trash2 } from 'lucide-react';
 import { toast } from '@/components/ui/sonner';
+import BackButton from '@/components/BackButton';
 
 const MyListings = () => {
   const { user } = useAuth();
@@ -44,6 +45,7 @@ const MyListings = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 container mx-auto px-4 py-6">
+        <div className="mb-4"><BackButton /></div>
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-display text-5xl md:text-6xl leading-none drop-shadow-[3px_3px_0px_#ff5722]">My Listings</h1>
           <Button asChild className="bg-brand-gradient hover:opacity-90">

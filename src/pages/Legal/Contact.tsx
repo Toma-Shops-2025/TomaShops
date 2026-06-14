@@ -1,11 +1,13 @@
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import { Mail, MessageCircle, ShieldAlert } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const Contact = () => (
   <div className="min-h-screen flex flex-col">
     <Navbar />
     <main className="flex-1 container mx-auto px-4 py-10 max-w-3xl">
+        <div className="mb-4"><BackButton /></div>
       <h1 className="text-3xl font-bold mb-2">Contact TomaShops</h1>
       <p className="text-muted-foreground mb-8">We typically reply within 1 business day.</p>
 
