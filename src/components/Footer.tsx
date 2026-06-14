@@ -15,8 +15,8 @@ const Footer = () => {
               The video-first marketplace. Every listing is a video — so you see exactly what you're buying. Direct, affiliate, or dropship.
             </p>
             <p className="text-sm">
-              <a href="mailto:contactus@tomashops.online" className="bg-primary text-primary-foreground px-3 py-1 border-2 border-background font-black uppercase tracking-wider hover:bg-secondary hover:text-foreground transition-colors">
-                contactus@tomashops.online
+              <a href="mailto:contactus@tomashops.shop" className="bg-primary text-primary-foreground px-3 py-1 border-2 border-background font-black uppercase tracking-wider hover:bg-secondary hover:text-foreground transition-colors">
+                contactus@tomashops.shop
               </a>
             </p>
           </div>

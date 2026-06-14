@@ -12,20 +12,20 @@ const Contact = () => (
       <p className="text-muted-foreground mb-8">We typically reply within 1 business day.</p>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <a href="mailto:contactus@tomashops.online" className="border rounded-xl p-6 hover:shadow-brand transition">
+        <a href="mailto:contactus@tomashops.shop" className="border rounded-xl p-6 hover:shadow-brand transition">
           <Mail className="h-6 w-6 text-primary mb-3" />
           <div className="font-semibold">General support</div>
-          <div className="text-sm text-muted-foreground">contactus@tomashops.online</div>
+          <div className="text-sm text-muted-foreground">contactus@tomashops.shop</div>
         </a>
-        <a href="mailto:contactus@tomashops.online?subject=Trust%20%26%20Safety%20Report" className="border rounded-xl p-6 hover:shadow-brand transition">
+        <a href="mailto:contactus@tomashops.shop?subject=Trust%20%26%20Safety%20Report" className="border rounded-xl p-6 hover:shadow-brand transition">
           <ShieldAlert className="h-6 w-6 text-primary mb-3" />
           <div className="font-semibold">Trust & safety</div>
           <div className="text-sm text-muted-foreground">Report fraud, abuse or policy violations</div>
         </a>
-        <a href="mailto:contactus@tomashops.online?subject=Press%20Inquiry" className="border rounded-xl p-6 hover:shadow-brand transition">
+        <a href="mailto:contactus@tomashops.shop?subject=Press%20Inquiry" className="border rounded-xl p-6 hover:shadow-brand transition">
           <MessageCircle className="h-6 w-6 text-primary mb-3" />
           <div className="font-semibold">Press & partnerships</div>
-          <div className="text-sm text-muted-foreground">contactus@tomashops.online</div>
+          <div className="text-sm text-muted-foreground">contactus@tomashops.shop</div>
         </a>
       </div>
 

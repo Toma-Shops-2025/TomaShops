@@ -19,7 +19,7 @@ const Cookies = () => (
       <h2 className="text-xl font-semibold mt-6 mb-3">Managing cookies</h2>
       <p>You can clear or block cookies through your browser settings. Note that disabling strictly necessary cookies will prevent you from signing in.</p>
       <h2 className="text-xl font-semibold mt-6 mb-3">Contact</h2>
-      <p>Questions about cookies? Email <a href="mailto:contactus@tomashops.online" className="text-primary">contactus@tomashops.online</a>.</p>
+      <p>Questions about cookies? Email <a href="mailto:contactus@tomashops.shop" className="text-primary">contactus@tomashops.shop</a>.</p>
     </main>
     <Footer />
   </div>
