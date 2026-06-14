@@ -34,6 +34,10 @@ interface Product {
   status: string;
   views: number;
   favorites: number;
+  listing_type?: 'direct' | 'affiliate' | 'dropship' | null;
+  external_url?: string | null;
+  affiliate_network?: string | null;
+  disclosure?: string | null;
   seller: {
     id: string;
     full_name: string | null;
@@ -227,13 +231,26 @@ const ProductDetail = () => {
     }
   };
   
-  const handleBuyNow = () => {
+  const handleBuyNow = async () => {
+    if (!product) return;
+    const isExternal = product.listing_type === 'affiliate' || product.listing_type === 'dropship';
+
+    if (isExternal && product.external_url) {
+      // Log click (fire-and-forget; allowed for anon + authenticated)
+      supabase.from('product_clicks' as any).insert({
+        product_id: product.id,
+        user_id: user?.id ?? null,
+        referrer: typeof document !== 'undefined' ? document.referrer : null,
+      } as any).then(() => {}, () => {});
+      window.open(product.external_url, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     if (!user) {
       toast.error("Please log in to purchase items");
       navigate('/auth/login');
       return;
     }
-    
     setShowPaymentModal(true);
   };
   
@@ -562,15 +579,36 @@ const ProductDetail = () => {
                 </div>
               </div>
               
+              {(product.listing_type === 'affiliate' || product.listing_type === 'dropship') && (
+                <div className="mb-3 p-3 rounded-md border border-primary/30 bg-primary/5 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Badge variant="outline" className="text-primary border-primary capitalize">
+                      {product.listing_type === 'affiliate' ? 'Affiliate Link' : 'Dropship'}
+                    </Badge>
+                    {product.affiliate_network && (
+                      <span className="font-medium">via {product.affiliate_network}</span>
+                    )}
+                  </div>
+                  <p>
+                    {product.disclosure ||
+                      'This listing contains an affiliate link. TomaShops or the seller may earn a commission, at no extra cost to you, if you make a purchase.'}
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-3">
                 <Button className="w-full" onClick={handleBuyNow}>
-                  Buy Now
+                  {product.listing_type === 'affiliate' || product.listing_type === 'dropship'
+                    ? `Buy on ${product.affiliate_network || 'external site'}`
+                    : 'Buy Now'}
                 </Button>
-                
-                <Button variant="outline" className="w-full" onClick={handleMakeOffer}>
-                  Make Offer
-                </Button>
-                
+
+                {product.listing_type === 'direct' && (
+                  <Button variant="outline" className="w-full" onClick={handleMakeOffer}>
+                    Make Offer
+                  </Button>
+                )}
+
                 <Button variant="secondary" className="w-full flex items-center justify-center" onClick={handleStartConversation}>
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Message Seller
