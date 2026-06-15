@@ -16,12 +16,15 @@ interface FeedProduct {
   videoUrl?: string;
   views?: number;
   listing_type?: 'direct' | 'affiliate' | 'dropship' | null;
+  affiliate_network?: string | null;
+  external_url?: string | null;
   seller?: {
     id?: string;
     full_name?: string | null;
     avatar_url?: string | null;
   } | null;
 }
+
 
 interface VerticalFeedProps {
   products: FeedProduct[];
@@ -199,13 +202,26 @@ const FeedSlide = ({ product, index, isActive, muted, setMuted, registerVideo }:
         >
           <Share2 className="h-5 w-5" />
         </button>
-        <Link
-          to={`/product/${product.id}`}
-          aria-label="View"
+        <button
+          onClick={() => {
+            const isExternal = product.listing_type === 'affiliate' || product.listing_type === 'dropship';
+            if (isExternal && product.external_url) {
+              supabase.from('product_clicks' as any).insert({
+                product_id: product.id,
+                user_id: user?.id ?? null,
+                referrer: typeof document !== 'undefined' ? document.referrer : null,
+              } as any).then(() => {}, () => {});
+              window.open(product.external_url, '_blank', 'noopener,noreferrer');
+              return;
+            }
+            navigate(`/product/${product.id}`);
+          }}
+          aria-label={product.listing_type === 'affiliate' || product.listing_type === 'dropship' ? 'Buy on external site' : 'View product'}
           className="w-12 h-12 flex items-center justify-center bg-secondary text-foreground border-2 border-black brutal-shadow brutal-press"
         >
           <ShoppingBag className="h-5 w-5" />
-        </Link>
+        </button>
+
       </div>
 
       {/* Bottom info card */}
