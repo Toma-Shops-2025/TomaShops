@@ -591,14 +591,14 @@ const ProductDetail = () => {
               )}
 
               <div className="space-y-3">
-                <Button
-                  className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary rounded-none border-4 border-black font-black uppercase tracking-widest text-base brutal-shadow brutal-press"
-                  onClick={handleBuyNow}
-                >
-                  {product.listing_type === 'affiliate' || product.listing_type === 'dropship'
-                    ? `Buy on ${product.affiliate_network || 'External Site'} →`
-                    : 'Buy Now'}
-                </Button>
+                {(product.listing_type === 'affiliate' || product.listing_type === 'dropship') && (
+                  <Button
+                    className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary rounded-none border-4 border-black font-black uppercase tracking-widest text-base brutal-shadow brutal-press"
+                    onClick={handleBuyNow}
+                  >
+                    {`Buy on ${product.affiliate_network || 'External Site'} →`}
+                  </Button>
+                )}
 
                 {product.listing_type === 'direct' && (
                   <Button
