@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { publicSupabase } from '@/lib/publicSupabase';
+import { fetchPublicProducts } from '@/lib/publicSupabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
@@ -56,18 +56,7 @@ const Index = () => {
       const timeout = window.setTimeout(() => controller.abort(), PRODUCTS_TIMEOUT_MS);
 
       try {
-        const { data, error } = await publicSupabase
-        .from('products')
-        .select(`
-          *,
-          seller:profiles!products_seller_id_fkey(id, full_name, avatar_url, rating)
-        `)
-        .eq('status', 'active')
-        .order('datePosted', { ascending: false })
-        .abortSignal(controller.signal);
-
-        if (error) throw error;
-        return (data ?? []) as unknown as Product[];
+        return await fetchPublicProducts<Product>(controller.signal);
       } catch (err: any) {
         if (err?.name === 'AbortError') {
           throw new Error('The public feed took too long to load. Please refresh.');
