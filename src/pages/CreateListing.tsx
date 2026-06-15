@@ -398,11 +398,13 @@ const CreateListing = () => {
                           <SelectContent>
                             <SelectItem value="direct">Direct — buyers contact me through TomaShops</SelectItem>
                             <SelectItem value="affiliate">Affiliate — buyers click out to my affiliate link</SelectItem>
-                            <SelectItem value="dropship">Dropship — buyers click out to my store / supplier</SelectItem>
+                            <SelectItem value="dropship">Dropship — I fulfill from a supplier</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormDescription>
-                          Affiliate & dropship listings send the buyer to an external site when they tap Buy.
+                          {listingType === 'dropship'
+                            ? "Dropship: add your store URL if you have one — otherwise buyers will contact you through TomaShops and you'll order from your supplier."
+                            : "Affiliate listings send the buyer to an external site when they tap Buy."}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -416,12 +418,16 @@ const CreateListing = () => {
                         name="external_url"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>External Buy URL</FormLabel>
+                            <FormLabel>
+                              {listingType === 'dropship' ? 'Your Store URL (optional)' : 'External Buy URL'}
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="https://amazon.com/dp/..." {...field} />
+                              <Input placeholder="https://your-store.com/product/..." {...field} />
                             </FormControl>
                             <FormDescription>
-                              The full https:// link buyers will be sent to when they tap Buy.
+                              {listingType === 'dropship'
+                                ? "Leave blank if you don't have your own site — buyers will message you here and you'll fulfill from your supplier."
+                                : 'The full https:// link buyers will be sent to when they tap Buy.'}
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
