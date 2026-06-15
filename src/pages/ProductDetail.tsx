@@ -613,15 +613,21 @@ const ProductDetail = () => {
                 </span>
               </div>
 
-              {(product.listing_type === 'affiliate' || product.listing_type === 'dropship') && (
+              {product.listing_type === 'affiliate' && (
                 <div className="mb-4 p-3 bg-secondary border-2 border-black text-[11px] font-bold leading-snug">
                   {product.disclosure ||
                     'This listing contains an affiliate link. TomaShops or the seller may earn a commission, at no extra cost to you.'}
                 </div>
               )}
+              {product.listing_type === 'dropship' && product.external_url && (
+                <div className="mb-4 p-3 bg-secondary border-2 border-black text-[11px] font-bold leading-snug">
+                  {product.disclosure ||
+                    'This is a dropship listing. Your order will be fulfilled by an external store or supplier.'}
+                </div>
+              )}
 
               <div className="space-y-3">
-                {(product.listing_type === 'affiliate' || product.listing_type === 'dropship') && (
+                {((product.listing_type === 'affiliate' || product.listing_type === 'dropship') && product.external_url) && (
                   <Button
                     className="w-full h-14 bg-primary text-primary-foreground hover:bg-primary rounded-none border-4 border-black font-black uppercase tracking-widest text-base brutal-shadow brutal-press"
                     onClick={handleBuyNow}
@@ -630,7 +636,8 @@ const ProductDetail = () => {
                   </Button>
                 )}
 
-                {product.listing_type === 'direct' && (
+                {(product.listing_type === 'direct' ||
+                  (product.listing_type === 'dropship' && !product.external_url)) && (
                   <Button
                     variant="outline"
                     className="w-full h-12 bg-background text-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press"
