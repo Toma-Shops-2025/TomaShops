@@ -433,48 +433,52 @@ const CreateListing = () => {
                           </FormItem>
                         )}
                       />
-                      <FormField
-                        control={form.control}
-                        name="affiliate_network"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Network / Store (optional)</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="e.g. Amazon, AliExpress, Shopify" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {['Amazon','AliExpress','eBay','Walmart','Shopify','Etsy','Other'].map(n => (
-                                  <SelectItem key={n} value={n}>{n}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="disclosure"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Custom Disclosure (optional)</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="As an Amazon Associate I earn from qualifying purchases."
-                                className="h-20"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormDescription>
-                              We'll automatically show an FTC affiliate disclosure. Add custom text here if you'd like.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                      {listingType === 'affiliate' && (
+                        <>
+                          <FormField
+                            control={form.control}
+                            name="affiliate_network"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Network / Store (optional)</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <FormControl>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="e.g. Amazon, AliExpress, Shopify" />
+                                    </SelectTrigger>
+                                  </FormControl>
+                                  <SelectContent>
+                                    {['Amazon','AliExpress','eBay','Walmart','Shopify','Etsy','Other'].map(n => (
+                                      <SelectItem key={n} value={n}>{n}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="disclosure"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Custom Disclosure (optional)</FormLabel>
+                                <FormControl>
+                                  <Textarea
+                                    placeholder="As an Amazon Associate I earn from qualifying purchases."
+                                    className="h-20"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  We'll automatically show an FTC affiliate disclosure. Add custom text here if you'd like.
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </>
+                      )}
                       <p className="text-xs text-muted-foreground">
                         By posting, you confirm you have the rights to this video and external link, and that the link complies with FTC affiliate disclosure rules.
                       </p>

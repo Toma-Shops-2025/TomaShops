@@ -18,11 +18,10 @@ interface VideoProductCardProps {
 
 const listingChipClass = (t?: string | null) => {
   if (t === 'affiliate') return 'chip-listing chip-affiliate';
-  if (t === 'dropship') return 'chip-listing chip-dropship';
   return 'chip-listing chip-direct';
 };
 const listingChipLabel = (t?: string | null) =>
-  t === 'affiliate' ? 'Affiliate' : t === 'dropship' ? 'Dropship' : 'Direct';
+  t === 'affiliate' ? 'Affiliate' : 'Direct';
 
 const VideoProductCard = ({ product, featured = false, initialFavorited = false, onUnfavorite }: VideoProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
