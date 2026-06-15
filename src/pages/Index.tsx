@@ -186,7 +186,29 @@ const Index = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                {/* View mode toggle */}
+                <div className="flex border-2 border-black brutal-shadow">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    aria-pressed={viewMode === 'grid'}
+                    className={`px-3 py-2 flex items-center gap-1 font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
+                      viewMode === 'grid' ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-secondary'
+                    }`}
+                  >
+                    <LayoutGrid className="h-4 w-4" /> Grid
+                  </button>
+                  <button
+                    onClick={() => setViewMode('feed')}
+                    aria-pressed={viewMode === 'feed'}
+                    className={`px-3 py-2 flex items-center gap-1 border-l-2 border-black font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
+                      viewMode === 'feed' ? 'bg-primary text-primary-foreground' : 'bg-background text-foreground hover:bg-secondary'
+                    }`}
+                  >
+                    <Smartphone className="h-4 w-4" /> Feed
+                  </button>
+                </div>
+
                 {LISTING_FILTERS.map((f) => (
                   <button
                     key={f.key}
