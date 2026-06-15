@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { publicSupabase } from '@/lib/publicSupabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
@@ -41,6 +41,7 @@ const LISTING_FILTERS: Array<{ key: 'all' | 'direct' | 'affiliate'; label: strin
   { key: 'direct', label: 'Direct' },
   { key: 'affiliate', label: 'Affiliate' },
 ];
+const PRODUCTS_TIMEOUT_MS = 8_000;
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -51,20 +52,35 @@ const Index = () => {
   const { data: products, isLoading, error } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), PRODUCTS_TIMEOUT_MS);
+
+      try {
+        const { data, error } = await publicSupabase
         .from('products')
         .select(`
           *,
           seller:profiles!products_seller_id_fkey(id, full_name, avatar_url, rating)
         `)
         .eq('status', 'active')
-        .order('datePosted', { ascending: false });
-      if (error) throw error;
-      return data as unknown as Product[];
+        .order('datePosted', { ascending: false })
+        .abortSignal(controller.signal);
+
+        if (error) throw error;
+        return (data ?? []) as unknown as Product[];
+      } catch (err: any) {
+        if (err?.name === 'AbortError') {
+          throw new Error('The public feed took too long to load. Please refresh.');
+        }
+        throw err;
+      } finally {
+        window.clearTimeout(timeout);
+      }
     },
     staleTime: 60_000,
     gcTime: 5 * 60_000,
     refetchOnWindowFocus: false,
+    retry: 1,
   });
 
   const searchFiltered = useMemo(() => {
@@ -201,7 +217,7 @@ const Index = () => {
               ))}
             </div>
 
-            {isLoading ? (
+            {isLoading && !products ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {[1,2,3,4,5,6,7,8].map(i => (
                   <div key={i} className="border-4 border-black bg-background brutal-shadow">
@@ -212,6 +228,16 @@ const Index = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            ) : error ? (
+              <div className="text-center py-20 border-4 border-dashed border-black bg-secondary/40">
+                <p className="font-display text-3xl mb-2">Feed did not load.</p>
+                <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6">
+                  Refresh the page to try again.
+                </p>
+                <Button onClick={() => window.location.reload()} className="bg-primary text-primary-foreground rounded-none border-4 border-black font-black uppercase tracking-widest brutal-shadow brutal-press">
+                  Reload feed
+                </Button>
               </div>
             ) : filtered.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
