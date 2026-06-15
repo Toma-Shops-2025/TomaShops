@@ -60,31 +60,17 @@ const ProductDetail = () => {
     queryKey: ['product', id],
     queryFn: async () => {
       if (!id) throw new Error("Product ID is required");
-      
-      // First increment the view count
-      await supabase.rpc('increment_product_view', { product_id: id });
-      
-      const { data, error } = await supabase
-        .from('products')
-        .select(`
-          *,
-          seller:profiles!products_seller_id_fkey(
-            id,
-            full_name,
-            avatar_url,
-            rating
-          )
-        `)
-        .eq('id', id)
-        .single();
-        
-      if (error) throw error;
+
+      // Fire-and-forget view increment (don't block render if it fails)
+      supabase.rpc('increment_product_view', { product_id: id }).then(() => {}, () => {});
+
+      const data = await fetchPublicProductById<Product>(id);
       if (!data) throw new Error("Product not found");
-      
-      return data as unknown as Product;
+      return data;
     },
     enabled: !!id
   });
+
   
   // Check if product is favorited by current user
   const { data: favoriteStatus } = useQuery({
