@@ -62,6 +62,9 @@ const Index = () => {
       if (error) throw error;
       return data as unknown as Product[];
     },
+    staleTime: 60_000,
+    gcTime: 5 * 60_000,
+    refetchOnWindowFocus: false,
   });
 
   const searchFiltered = useMemo(() => {
