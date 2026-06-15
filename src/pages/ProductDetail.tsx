@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
+import { fetchPublicProductById, fetchPublicRelatedProducts } from '@/lib/publicSupabase';
+
 import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
