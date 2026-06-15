@@ -50,8 +50,17 @@ const listingSchema = z.object({
   affiliate_network: z.string().trim().max(50).optional().or(z.literal('')),
   disclosure: z.string().trim().max(500).optional().or(z.literal('')),
 }).refine(
-  (d) => d.listing_type === 'direct' || (d.external_url && /^https?:\/\//i.test(d.external_url)),
-  { message: 'A valid http(s) URL is required for affiliate/dropship listings', path: ['external_url'] }
+  (d) => {
+    // Affiliate requires a URL. Dropship URL is optional (if blank, behaves like direct).
+    if (d.listing_type === 'affiliate') {
+      return !!d.external_url && /^https?:\/\//i.test(d.external_url);
+    }
+    if (d.listing_type === 'dropship' && d.external_url) {
+      return /^https?:\/\//i.test(d.external_url);
+    }
+    return true;
+  },
+  { message: 'Please enter a valid http(s) URL', path: ['external_url'] }
 );
 
 const categories = ["Electronics", "Fashion", "Home & Garden", "Sports", "Music", "Toys", "Books", "Automotive", "Other"];
