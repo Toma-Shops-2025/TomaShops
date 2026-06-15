@@ -260,12 +260,20 @@ const Index = () => {
                 </Button>
               </div>
             ) : filtered.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filtered.map((p) => (
-                  <VideoProductCard key={p.id} product={p as any} />
-                ))}
-              </div>
-            ) : (
+              viewMode === 'feed' ? (
+                <div className="mx-auto max-w-md md:max-w-lg">
+                  <VerticalFeed products={filtered as any} />
+                  <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-3">
+                    Swipe / scroll for next · tap volume to unmute
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {filtered.map((p) => (
+                    <VideoProductCard key={p.id} product={p as any} />
+                  ))}
+                </div>
+              )
               <div className="text-center py-20 border-4 border-dashed border-black bg-secondary/40">
                 <p className="font-display text-3xl mb-2">Nothing here yet.</p>
                 <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6">
