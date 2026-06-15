@@ -34,8 +34,9 @@ const registerSchema = z.object({
 });
 
 const Register = () => {
-  const { signUp, setUserType } = useAuth();
+  const { signUp, setUserType, signInWithGoogle } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof registerSchema>>({
