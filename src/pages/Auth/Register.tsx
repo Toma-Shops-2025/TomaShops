@@ -55,7 +55,7 @@ const Register = () => {
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
       setIsLoading(true);
-      await signUp(values.email, values.password);
+      await signUp(values.email, values.password, values.userType);
       await setUserType(values.userType);
       navigate('/');
     } catch (error) {
@@ -64,6 +64,18 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsGoogleLoading(true);
+      await signInWithGoogle();
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
+
 
   return (
     <div className="min-h-screen flex flex-col">
