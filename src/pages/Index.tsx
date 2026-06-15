@@ -1,13 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPublicProducts } from '@/lib/publicSupabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
+import VerticalFeed from '@/components/VerticalFeed';
 import { Button } from '@/components/ui/button';
-import { X, Upload, Zap, Shield, Gift } from 'lucide-react';
+import { X, Upload, Zap, Shield, Gift, LayoutGrid, Smartphone } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+
+type ViewMode = 'grid' | 'feed';
+const VIEW_KEY = 'tomashops:feed-view';
 
 interface Product {
   id: string;
