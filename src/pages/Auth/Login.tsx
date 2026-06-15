@@ -27,8 +27,9 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
-  const { signIn } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof loginSchema>>({
