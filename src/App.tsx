@@ -18,6 +18,7 @@ import CreateListing from "./pages/CreateListing";
 import MyListings from "./pages/MyListings";
 import Favorites from "./pages/Favorites";
 import Unauthorized from "./pages/Unauthorized";
+import DeleteAccount from "./pages/DeleteAccount";
 import Terms from "./pages/Legal/Terms";
 import Privacy from "./pages/Legal/Privacy";
 import Cookies from "./pages/Legal/Cookies";
@@ -70,6 +71,7 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/delete-account" element={<DeleteAccount />} />
             
             {/* Legal & Help Pages */}
             <Route path="/terms" element={<Terms />} />
