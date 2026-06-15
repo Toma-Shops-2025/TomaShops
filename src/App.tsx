@@ -46,7 +46,7 @@ const App = () => (
                 <Messages />
               </ProtectedRoute>
             } />
-            <Route path="/messages/:userId" element={
+            <Route path="/messages/:conversationId" element={
               <ProtectedRoute>
                 <Messages />
               </ProtectedRoute>
