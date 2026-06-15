@@ -8,9 +8,10 @@ type AuthContextType = {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, userType?: 'buyer' | 'seller') => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   userType: 'buyer' | 'seller' | null;
   setUserType: (type: 'buyer' | 'seller') => Promise<void>;
 };
