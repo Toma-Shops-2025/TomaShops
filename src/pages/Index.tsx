@@ -178,7 +178,7 @@ const Index = () => {
 
           {/* FEED */}
           <section id="feed" className="my-8 scroll-mt-20">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6 border-b-4 border-black pb-4">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-4 border-b-4 border-black pb-4">
               <div>
                 <h2 className="font-display text-4xl md:text-5xl leading-none">The Feed</h2>
                 <p className="text-xs font-black uppercase tracking-widest mt-2 text-muted-foreground">
@@ -187,28 +187,6 @@ const Index = () => {
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                {/* View mode toggle */}
-                <div className="flex border-2 border-black brutal-shadow">
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    aria-pressed={viewMode === 'grid'}
-                    className={`px-3 py-2 flex items-center gap-1 font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
-                      viewMode === 'grid' ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-secondary'
-                    }`}
-                  >
-                    <LayoutGrid className="h-4 w-4" /> Grid
-                  </button>
-                  <button
-                    onClick={() => setViewMode('feed')}
-                    aria-pressed={viewMode === 'feed'}
-                    className={`px-3 py-2 flex items-center gap-1 border-l-2 border-black font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
-                      viewMode === 'feed' ? 'bg-primary text-primary-foreground' : 'bg-background text-foreground hover:bg-secondary'
-                    }`}
-                  >
-                    <Smartphone className="h-4 w-4" /> Feed
-                  </button>
-                </div>
-
                 {LISTING_FILTERS.map((f) => (
                   <button
                     key={f.key}
@@ -220,6 +198,31 @@ const Index = () => {
                     {f.label}
                   </button>
                 ))}
+              </div>
+            </div>
+
+            {/* Prominent view mode toggle */}
+            <div className="mb-6 flex items-center gap-3">
+              <span className="font-black uppercase text-[10px] tracking-widest text-muted-foreground hidden sm:inline">View:</span>
+              <div className="flex flex-1 sm:flex-none border-4 border-black brutal-shadow-lg">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  aria-pressed={viewMode === 'grid'}
+                  className={`flex-1 sm:flex-none px-5 py-3 flex items-center justify-center gap-2 font-black uppercase text-sm tracking-widest brutal-press transition-colors ${
+                    viewMode === 'grid' ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-secondary'
+                  }`}
+                >
+                  <LayoutGrid className="h-5 w-5" /> Grid
+                </button>
+                <button
+                  onClick={() => setViewMode('feed')}
+                  aria-pressed={viewMode === 'feed'}
+                  className={`flex-1 sm:flex-none px-5 py-3 flex items-center justify-center gap-2 border-l-4 border-black font-black uppercase text-sm tracking-widest brutal-press transition-colors ${
+                    viewMode === 'feed' ? 'bg-primary text-primary-foreground' : 'bg-background text-foreground hover:bg-secondary'
+                  }`}
+                >
+                  <Smartphone className="h-5 w-5" /> Scroll Feed
+                </button>
               </div>
             </div>
 
