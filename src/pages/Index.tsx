@@ -274,6 +274,7 @@ const Index = () => {
                   ))}
                 </div>
               )
+            ) : (
               <div className="text-center py-20 border-4 border-dashed border-black bg-secondary/40">
                 <p className="font-display text-3xl mb-2">Nothing here yet.</p>
                 <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6">
