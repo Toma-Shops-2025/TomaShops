@@ -143,15 +143,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    // Clear local state immediately so UI doesn't hang if the network call stalls
+    setUserTypeState(null);
+    setUser(null);
+    setSession(null);
     try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      setUserTypeState(null);
-      toast.success('Logged out successfully');
-    } catch (error: any) {
-      toast.error(error.message || 'Error signing out');
-      throw error;
+      await Promise.race([
+        supabase.auth.signOut({ scope: 'local' }),
+        new Promise((resolve) => setTimeout(resolve, 1500)),
+      ]);
+    } catch (e) {
+      console.warn('signOut error (ignored):', e);
     }
+    toast.success('Logged out');
+    window.location.href = '/';
   };
 
   const value = {
