@@ -50,6 +50,11 @@ const PRODUCTS_TIMEOUT_MS = 8_000;
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [listingFilter, setListingFilter] = useState<'all' | 'direct' | 'affiliate'>('all');
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    if (typeof window === 'undefined') return 'grid';
+    return (localStorage.getItem(VIEW_KEY) as ViewMode) || 'grid';
+  });
+  useEffect(() => { localStorage.setItem(VIEW_KEY, viewMode); }, [viewMode]);
   const [params, setParams] = useSearchParams();
   const searchQuery = params.get('q') ?? '';
 
