@@ -1,13 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPublicProducts } from '@/lib/publicSupabase';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
+import VerticalFeed from '@/components/VerticalFeed';
 import { Button } from '@/components/ui/button';
-import { X, Upload, Zap, Shield, Gift } from 'lucide-react';
+import { X, Upload, Zap, Shield, Gift, LayoutGrid, Smartphone } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+
+type ViewMode = 'grid' | 'feed';
+const VIEW_KEY = 'tomashops:feed-view';
 
 interface Product {
   id: string;
@@ -46,6 +50,11 @@ const PRODUCTS_TIMEOUT_MS = 8_000;
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [listingFilter, setListingFilter] = useState<'all' | 'direct' | 'affiliate'>('all');
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    if (typeof window === 'undefined') return 'grid';
+    return (localStorage.getItem(VIEW_KEY) as ViewMode) || 'grid';
+  });
+  useEffect(() => { localStorage.setItem(VIEW_KEY, viewMode); }, [viewMode]);
   const [params, setParams] = useSearchParams();
   const searchQuery = params.get('q') ?? '';
 
@@ -177,7 +186,29 @@ const Index = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                {/* View mode toggle */}
+                <div className="flex border-2 border-black brutal-shadow">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    aria-pressed={viewMode === 'grid'}
+                    className={`px-3 py-2 flex items-center gap-1 font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
+                      viewMode === 'grid' ? 'bg-foreground text-background' : 'bg-background text-foreground hover:bg-secondary'
+                    }`}
+                  >
+                    <LayoutGrid className="h-4 w-4" /> Grid
+                  </button>
+                  <button
+                    onClick={() => setViewMode('feed')}
+                    aria-pressed={viewMode === 'feed'}
+                    className={`px-3 py-2 flex items-center gap-1 border-l-2 border-black font-black uppercase text-xs tracking-widest brutal-press transition-colors ${
+                      viewMode === 'feed' ? 'bg-primary text-primary-foreground' : 'bg-background text-foreground hover:bg-secondary'
+                    }`}
+                  >
+                    <Smartphone className="h-4 w-4" /> Feed
+                  </button>
+                </div>
+
                 {LISTING_FILTERS.map((f) => (
                   <button
                     key={f.key}
@@ -229,11 +260,20 @@ const Index = () => {
                 </Button>
               </div>
             ) : filtered.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filtered.map((p) => (
-                  <VideoProductCard key={p.id} product={p as any} />
-                ))}
-              </div>
+              viewMode === 'feed' ? (
+                <div className="mx-auto max-w-md md:max-w-lg">
+                  <VerticalFeed products={filtered as any} />
+                  <p className="text-center text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-3">
+                    Swipe / scroll for next · tap volume to unmute
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {filtered.map((p) => (
+                    <VideoProductCard key={p.id} product={p as any} />
+                  ))}
+                </div>
+              )
             ) : (
               <div className="text-center py-20 border-4 border-dashed border-black bg-secondary/40">
                 <p className="font-display text-3xl mb-2">Nothing here yet.</p>
