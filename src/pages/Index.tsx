@@ -143,13 +143,6 @@ const Index = () => {
                   <div className="absolute top-4 left-4">
                     <span className="chip-listing chip-affiliate">Affiliate</span>
                   </div>
-                  <div className="absolute right-3 bottom-32 flex flex-col gap-3">
-                    {[1,2,3].map(i => (
-                      <div key={i} className="w-11 h-11 bg-background border-2 border-black brutal-shadow flex items-center justify-center text-foreground">
-                        <Zap className="h-5 w-5" />
-                      </div>
-                    ))}
-                  </div>
                   <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-foreground/95 to-transparent">
                     <p className="font-display text-2xl text-background drop-shadow-[2px_2px_0px_#ff5722]">$129</p>
                     <p className="text-background text-xs font-black uppercase tracking-wider">@retro_curator</p>
