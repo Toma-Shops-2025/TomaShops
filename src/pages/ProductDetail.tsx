@@ -195,17 +195,17 @@ const ProductDetail = () => {
     
     try {
       // Check if conversation already exists
-      const { data: existingConvo, error: convoError } = await supabase
+      const { data: existingConvo } = await supabase
         .from('conversations')
         .select('id')
         .eq('buyer_id', user.id)
         .eq('seller_id', product.seller_id)
         .eq('product_id', product.id)
-        .single();
+        .maybeSingle();
       
       let conversationId;
       
-      if (convoError) {
+      if (!existingConvo) {
         // Create new conversation
         const { data: newConvo, error: newConvoError } = await supabase
           .from('conversations')
