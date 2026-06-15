@@ -50,8 +50,17 @@ const listingSchema = z.object({
   affiliate_network: z.string().trim().max(50).optional().or(z.literal('')),
   disclosure: z.string().trim().max(500).optional().or(z.literal('')),
 }).refine(
-  (d) => d.listing_type === 'direct' || (d.external_url && /^https?:\/\//i.test(d.external_url)),
-  { message: 'A valid http(s) URL is required for affiliate/dropship listings', path: ['external_url'] }
+  (d) => {
+    // Affiliate requires a URL. Dropship URL is optional (if blank, behaves like direct).
+    if (d.listing_type === 'affiliate') {
+      return !!d.external_url && /^https?:\/\//i.test(d.external_url);
+    }
+    if (d.listing_type === 'dropship' && d.external_url) {
+      return /^https?:\/\//i.test(d.external_url);
+    }
+    return true;
+  },
+  { message: 'Please enter a valid http(s) URL', path: ['external_url'] }
 );
 
 const categories = ["Electronics", "Fashion", "Home & Garden", "Sports", "Music", "Toys", "Books", "Automotive", "Other"];
@@ -389,11 +398,13 @@ const CreateListing = () => {
                           <SelectContent>
                             <SelectItem value="direct">Direct — buyers contact me through TomaShops</SelectItem>
                             <SelectItem value="affiliate">Affiliate — buyers click out to my affiliate link</SelectItem>
-                            <SelectItem value="dropship">Dropship — buyers click out to my store / supplier</SelectItem>
+                            <SelectItem value="dropship">Dropship — I fulfill from a supplier</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormDescription>
-                          Affiliate & dropship listings send the buyer to an external site when they tap Buy.
+                          {listingType === 'dropship'
+                            ? "Dropship: add your store URL if you have one — otherwise buyers will contact you through TomaShops and you'll order from your supplier."
+                            : "Affiliate listings send the buyer to an external site when they tap Buy."}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -407,12 +418,16 @@ const CreateListing = () => {
                         name="external_url"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>External Buy URL</FormLabel>
+                            <FormLabel>
+                              {listingType === 'dropship' ? 'Your Store URL (optional)' : 'External Buy URL'}
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="https://amazon.com/dp/..." {...field} />
+                              <Input placeholder="https://your-store.com/product/..." {...field} />
                             </FormControl>
                             <FormDescription>
-                              The full https:// link buyers will be sent to when they tap Buy.
+                              {listingType === 'dropship'
+                                ? "Leave blank if you don't have your own site — buyers will message you here and you'll fulfill from your supplier."
+                                : 'The full https:// link buyers will be sent to when they tap Buy.'}
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
