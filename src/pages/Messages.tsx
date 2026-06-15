@@ -64,7 +64,10 @@ const Messages = () => {
         .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`)
         .order('updated_at', { ascending: false });
       if (error) throw error;
-      return (data || []) as unknown as ConversationRow[];
+      // Filter out any legacy self-conversations (buyer == seller)
+      return ((data || []) as unknown as ConversationRow[]).filter(
+        (c) => c.buyer_id !== c.seller_id
+      );
     },
     enabled: !!user,
   });
