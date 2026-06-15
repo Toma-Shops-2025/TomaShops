@@ -73,6 +73,7 @@ const App = () => (
             } />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
+            <Route path="/delete-data" element={<DeleteData />} />
             
             {/* Legal & Help Pages */}
             <Route path="/terms" element={<Terms />} />
