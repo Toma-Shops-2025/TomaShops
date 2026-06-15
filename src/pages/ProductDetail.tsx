@@ -98,28 +98,11 @@ const ProductDetail = () => {
   const { data: relatedProducts } = useQuery({
     queryKey: ['relatedProducts', product?.category],
     queryFn: async () => {
-      if (!product?.category) return [];
-      
-      const { data, error } = await supabase
-        .from('products')
-        .select(`
-          *,
-          seller:profiles!products_seller_id_fkey(
-            id,
-            full_name,
-            avatar_url,
-            rating
-          )
-        `)
-        .eq('status', 'active')
-        .eq('category', product.category)
-        .neq('id', product.id)
-        .limit(4);
-        
-      if (error) throw error;
-      return data as unknown as Product[];
+      if (!product?.category || !product?.id) return [];
+      return await fetchPublicRelatedProducts<Product>(product.category, product.id);
     },
     enabled: !!product?.category
+
   });
   
   // Set active image to thumbnail when product loads
