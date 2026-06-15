@@ -36,16 +36,15 @@ interface Product {
 }
 
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home & Garden', 'Sports', 'Music'];
-const LISTING_FILTERS: Array<{ key: 'all' | 'direct' | 'affiliate' | 'dropship'; label: string }> = [
+const LISTING_FILTERS: Array<{ key: 'all' | 'direct' | 'affiliate'; label: string }> = [
   { key: 'all', label: 'All' },
   { key: 'direct', label: 'Direct' },
   { key: 'affiliate', label: 'Affiliate' },
-  { key: 'dropship', label: 'Dropship' },
 ];
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [listingFilter, setListingFilter] = useState<'all' | 'direct' | 'affiliate' | 'dropship'>('all');
+  const [listingFilter, setListingFilter] = useState<'all' | 'direct' | 'affiliate'>('all');
   const [params, setParams] = useSearchParams();
   const searchQuery = params.get('q') ?? '';
 
