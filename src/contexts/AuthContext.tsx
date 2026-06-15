@@ -8,9 +8,10 @@ type AuthContextType = {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, userType?: 'buyer' | 'seller') => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   userType: 'buyer' | 'seller' | null;
   setUserType: (type: 'buyer' | 'seller') => Promise<void>;
 };
@@ -25,28 +26,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
-        // Fetch user type from profiles table
-        fetchUserType(session.user.id);
+        await fetchUserType(session.user.id);
       }
       setLoading(false);
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
-        fetchUserType(session.user.id);
+        setLoading(true);
+        await fetchUserType(session.user.id);
+        setLoading(false);
       } else {
         setUserTypeState(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => {
@@ -92,11 +94,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, userType: 'buyer' | 'seller' = 'buyer') => {
     try {
+      const redirectUrl = `${window.location.origin}/`;
       const { error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: { user_type: userType },
+        },
       });
       if (error) throw error;
       toast.success('Registration successful! Please check your email for verification.');
@@ -120,6 +127,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const { lovable } = await import('@/integrations/lovable/index');
+      const result = await lovable.auth.signInWithOAuth('google', {
+        redirect_uri: window.location.origin,
+      });
+      if (result.error) {
+        toast.error(result.error.message || 'Google sign-in failed');
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Google sign-in failed');
+      throw error;
+    }
+  };
+
   const signOut = async () => {
     try {
       const { error } = await supabase.auth.signOut();
@@ -139,9 +161,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signUp,
     signIn,
     signOut,
+    signInWithGoogle,
     userType,
     setUserType,
   };
+
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
