@@ -605,10 +605,9 @@ const ProductDetail = () => {
               <div className="mb-4">
                 <span className={
                   product.listing_type === 'affiliate' ? 'chip-listing chip-affiliate' :
-                  product.listing_type === 'dropship' ? 'chip-listing chip-dropship' :
                   'chip-listing chip-direct'
                 }>
-                  {product.listing_type === 'affiliate' ? 'Affiliate' : product.listing_type === 'dropship' ? 'Dropship' : 'Direct'}
+                  {product.listing_type === 'affiliate' ? 'Affiliate' : 'Direct'}
                   {product.affiliate_network ? ` · ${product.affiliate_network}` : ''}
                 </span>
               </div>
@@ -617,12 +616,6 @@ const ProductDetail = () => {
                 <div className="mb-4 p-3 bg-secondary border-2 border-black text-[11px] font-bold leading-snug">
                   {product.disclosure ||
                     'This listing contains an affiliate link. TomaShops or the seller may earn a commission, at no extra cost to you.'}
-                </div>
-              )}
-              {product.listing_type === 'dropship' && product.external_url && (
-                <div className="mb-4 p-3 bg-secondary border-2 border-black text-[11px] font-bold leading-snug">
-                  {product.disclosure ||
-                    'This is a dropship listing. Your order will be fulfilled by an external store or supplier.'}
                 </div>
               )}
 
