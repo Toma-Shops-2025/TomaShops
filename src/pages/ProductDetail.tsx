@@ -184,53 +184,51 @@ const ProductDetail = () => {
     }
   };
   
+  const getOrCreateConversation = async () => {
+    if (!user || !product) return null;
+    const { data: existingConvo } = await supabase
+      .from('conversations')
+      .select('id')
+      .eq('buyer_id', user.id)
+      .eq('seller_id', product.seller_id)
+      .eq('product_id', product.id)
+      .maybeSingle();
+
+    if (existingConvo) return existingConvo.id as string;
+
+    const { data: newConvo, error: newConvoError } = await supabase
+      .from('conversations')
+      .insert({
+        buyer_id: user.id,
+        seller_id: product.seller_id,
+        product_id: product.id,
+      })
+      .select('id')
+      .single();
+    if (newConvoError) throw newConvoError;
+    return newConvo.id as string;
+  };
+
   const handleStartConversation = async () => {
     if (!user) {
-      toast.error("Please log in to message sellers");
+      toast.error('Please log in to message sellers');
       navigate('/auth/login');
       return;
     }
-    
     if (!product) return;
-    
+    if (user.id === product.seller_id) {
+      toast.error("You can't message yourself");
+      return;
+    }
     try {
-      // Check if conversation already exists
-      const { data: existingConvo } = await supabase
-        .from('conversations')
-        .select('id')
-        .eq('buyer_id', user.id)
-        .eq('seller_id', product.seller_id)
-        .eq('product_id', product.id)
-        .maybeSingle();
-      
-      let conversationId;
-      
-      if (!existingConvo) {
-        // Create new conversation
-        const { data: newConvo, error: newConvoError } = await supabase
-          .from('conversations')
-          .insert({
-            buyer_id: user.id,
-            seller_id: product.seller_id,
-            product_id: product.id
-          })
-          .select('id')
-          .single();
-          
-        if (newConvoError) throw newConvoError;
-        conversationId = newConvo.id;
-      } else {
-        conversationId = existingConvo.id;
-      }
-      
-      // Navigate to messages screen with conversation
-      navigate(`/messages/${conversationId}`);
+      const conversationId = await getOrCreateConversation();
+      if (conversationId) navigate(`/messages/${conversationId}`);
     } catch (error) {
-      console.error("Error starting conversation:", error);
-      toast.error("Failed to start conversation");
+      console.error('Error starting conversation:', error);
+      toast.error('Failed to start conversation');
     }
   };
-  
+
   const handleBuyNow = async () => {
     if (!product) return;
     const isExternal = product.listing_type === 'affiliate' || product.listing_type === 'dropship';
@@ -253,15 +251,47 @@ const ProductDetail = () => {
     }
     setShowPaymentModal(true);
   };
-  
-  const handleMakeOffer = () => {
+
+  const handleMakeOffer = async () => {
     if (!user) {
-      toast.error("Please log in to make offers");
+      toast.error('Please log in to make offers');
       navigate('/auth/login');
       return;
     }
-    
-    handleStartConversation();
+    if (!product) return;
+    if (user.id === product.seller_id) {
+      toast.error("You can't make an offer on your own listing");
+      return;
+    }
+    const input = window.prompt(
+      `Make an offer for "${product.title}" (listed at $${product.price}).\n\nEnter your offer amount in USD:`
+    );
+    if (input === null) return;
+    const amount = parseFloat(input.replace(/[^0-9.]/g, ''));
+    if (!Number.isFinite(amount) || amount <= 0) {
+      toast.error('Please enter a valid amount');
+      return;
+    }
+    try {
+      const conversationId = await getOrCreateConversation();
+      if (!conversationId) return;
+      const offerMsg = `💰 Offer: $${amount.toFixed(2)} for "${product.title}" (listed at $${product.price}).`;
+      const { error: msgErr } = await supabase.from('messages').insert({
+        conversation_id: conversationId,
+        sender_id: user.id,
+        content: offerMsg,
+      });
+      if (msgErr) throw msgErr;
+      await supabase
+        .from('conversations')
+        .update({ updated_at: new Date().toISOString() })
+        .eq('id', conversationId);
+      toast.success('Offer sent to seller');
+      navigate(`/messages/${conversationId}`);
+    } catch (error) {
+      console.error('Error making offer:', error);
+      toast.error('Failed to send offer');
+    }
   };
   
   const handleShareProduct = () => {
