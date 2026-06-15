@@ -16,12 +16,15 @@ interface FeedProduct {
   videoUrl?: string;
   views?: number;
   listing_type?: 'direct' | 'affiliate' | 'dropship' | null;
+  affiliate_network?: string | null;
+  external_url?: string | null;
   seller?: {
     id?: string;
     full_name?: string | null;
     avatar_url?: string | null;
   } | null;
 }
+
 
 interface VerticalFeedProps {
   products: FeedProduct[];
