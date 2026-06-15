@@ -60,9 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         .from('profiles')
         .select('user_type')
         .eq('id', userId)
-        .single();
-      
-      if (error) throw error;
+        .maybeSingle();
       
       if (data) {
         setUserTypeState(data.user_type as 'buyer' | 'seller');
