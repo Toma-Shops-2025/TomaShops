@@ -13,7 +13,7 @@ const Privacy = () => {
           <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
           
           <div className="prose prose-lg">
-            <p className="text-muted-foreground">Last updated: May 12, 2025</p>
+            <p className="text-muted-foreground">Last updated: June 15, 2026</p>
             
             <h2 className="text-xl font-semibold mt-6 mb-3">1. Introduction</h2>
             <p>
@@ -54,8 +54,10 @@ const Privacy = () => {
               <li>Communicating with you</li>
               <li>Ensuring compliance with our policies</li>
               <li>Analyzing usage patterns</li>
-              <li>Marketing and advertising</li>
             </ul>
+            <p>
+              <strong>Advertising:</strong> We do not currently display third-party advertisements or use your information for advertising purposes. We may introduce advertising in the future, and if we do, we will update this Privacy Policy accordingly.
+            </p>
             
             <h2 className="text-xl font-semibold mt-6 mb-3">4. Information Sharing</h2>
             <p>
