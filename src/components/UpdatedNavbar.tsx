@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Menu, X, Upload } from 'lucide-react';
+import { Search, Menu, X, Upload, Share2 } from 'lucide-react';
 import UserMenu from './UserMenu';
 import useModile from '@/hooks/use-mobile';
 
@@ -54,6 +54,11 @@ const UpdatedNavbar = () => {
           </form>
 
           <div className="hidden md:flex items-center space-x-3">
+            <Button asChild variant="ghost" className="rounded-none border-2 border-black font-black uppercase tracking-wider brutal-press hover:bg-secondary">
+              <Link to="/share">
+                <Share2 className="h-4 w-4 mr-1" /> Share
+              </Link>
+            </Button>
             {user && userType === 'seller' && (
               <Button asChild className="bg-primary hover:bg-primary text-primary-foreground border-2 border-black rounded-none font-black uppercase tracking-wider brutal-shadow brutal-press">
                 <Link to="/create-listing">
@@ -94,6 +99,7 @@ const UpdatedNavbar = () => {
 
             <nav className="space-y-1 font-bold uppercase text-sm tracking-wider">
               <Link to="/" className="block py-2 hover:bg-secondary px-3 border-l-4 border-transparent hover:border-black" onClick={() => setIsMenuOpen(false)}>Home</Link>
+              <Link to="/share" className="flex items-center py-2 hover:bg-secondary px-3 border-l-4 border-transparent hover:border-black" onClick={() => setIsMenuOpen(false)}><Share2 className="h-4 w-4 mr-2" /> Share TomaShops</Link>
               {user ? (
                 <>
                   <Link to="/profile" className="block py-2 hover:bg-secondary px-3 border-l-4 border-transparent hover:border-black" onClick={() => setIsMenuOpen(false)}>My Profile</Link>

@@ -33,6 +33,7 @@ const Footer = () => {
             ['/safety', 'Safety tips'],
             ['/community-guidelines', 'Community'],
             ['/contact', 'Contact us'],
+            ['/share', 'Share / QR code'],
           ]} />
 
           <FooterCol title="Legal" links={[
