@@ -10,6 +10,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Share from "./pages/Share";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
@@ -40,6 +41,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/share" element={<Share />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/messages" element={
               <ProtectedRoute>
