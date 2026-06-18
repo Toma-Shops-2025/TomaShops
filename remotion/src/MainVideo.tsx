@@ -47,7 +47,8 @@ const CAPTIONS = [
 const INTRO = 75; // 2.5s
 const PER_SHOT = 75; // 2.5s each x 8 = 600
 const OUTRO = 105; // 3.5s
-export const TOTAL_FRAMES = INTRO + PER_SHOT * SHOTS.length + OUTRO; // 780
+const QR_END = 150; // 5s
+export const TOTAL_FRAMES = INTRO + PER_SHOT * SHOTS.length + OUTRO + QR_END; // 930
 
 const BgGrid: React.FC = () => {
   const frame = useCurrentFrame();
