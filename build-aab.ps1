@@ -14,12 +14,14 @@
 
 $ErrorActionPreference = "Stop"
 
-$ProjectRoot  = $PSScriptRoot
-$AndroidDir   = Join-Path $ProjectRoot "android"
-$CapConfig    = Join-Path $ProjectRoot "capacitor.config.json"
-$CapBackup    = Join-Path $ProjectRoot "capacitor.config.backup.json"
-$KeystorePath = "C:\Keys\tomashops.jks"
-$KeyAlias     = "tomashops1"
+ $ProjectRoot   = $PSScriptRoot
+ $AndroidDir    = Join-Path $ProjectRoot "android"
+ $BuildGradle   = Join-Path $AndroidDir "app\build.gradle"
+ $CapConfig     = Join-Path $ProjectRoot "capacitor.config.json"
+ $CapBackup     = Join-Path $ProjectRoot "capacitor.config.backup.json"
+ $KeystorePath  = "C:\Keys\tomashops.jks"
+ $KeyAlias      = "tomashops1"
+ 
 
 Set-Location $ProjectRoot
 
@@ -50,11 +52,25 @@ try {
     Write-Host "[2/6] bun install..." -ForegroundColor Cyan
     bun install
 
-    Write-Host "[3/6] bun run build..." -ForegroundColor Cyan
-    bun run build
-
-    Write-Host "[4/6] bunx cap sync android..." -ForegroundColor Cyan
-    bunx cap sync android
+     Write-Host "[3/6] bun run build..." -ForegroundColor Cyan
+     bun run build
+ 
+     Write-Host "[3b/6] Auto-bumping versionCode in build.gradle..." -ForegroundColor Cyan
+     $GradleContent = Get-Content $BuildGradle -Raw
+     # Find current versionCode
+     if ($GradleContent -match 'versionCode\s+(\d+)') {
+         $OldCode = [int]$matches[1]
+         $NewCode = $OldCode + 1
+         $GradleContent = $GradleContent -replace "versionCode\s+$OldCode", "versionCode $NewCode"
+         Set-Content $BuildGradle $GradleContent -Encoding UTF8
+         Write-Host "    versionCode bumped: $OldCode -> $NewCode" -ForegroundColor Green
+     } else {
+         Write-Host "    WARNING: could not find versionCode in build.gradle" -ForegroundColor Yellow
+     }
+ 
+     Write-Host "[4/6] bunx cap sync android..." -ForegroundColor Cyan
+     bunx cap sync android
+ 
 
     Write-Host "[5/6] gradlew bundleRelease..." -ForegroundColor Cyan
     $Gradlew = Join-Path $AndroidDir "gradlew.bat"
