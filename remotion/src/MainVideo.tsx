@@ -8,7 +8,7 @@ import {
   staticFile,
   Img,
 } from "remotion";
-import { loadFont as loadTrade } from "@remotion/google-fonts/Tradewinds";
+import { loadFont as loadTrade } from "@remotion/google-fonts/TradeWinds";
 import { loadFont as loadSpace } from "@remotion/google-fonts/SpaceGrotesk";
 
 const trade = loadTrade("normal", { weights: ["400"], subsets: ["latin"] });
