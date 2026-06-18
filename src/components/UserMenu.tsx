@@ -21,6 +21,7 @@ import {
   ShoppingBag,
   Package,
   Upload,
+  Share2,
 } from 'lucide-react';
 
 const UserMenu = () => {
@@ -130,6 +131,12 @@ const UserMenu = () => {
           <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
+          </DropdownMenuItem>
+        </Link>
+        <Link to="/share">
+          <DropdownMenuItem>
+            <Share2 className="mr-2 h-4 w-4" />
+            <span>Share TomaShops</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
