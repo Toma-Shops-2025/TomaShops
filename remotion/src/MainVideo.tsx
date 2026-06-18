@@ -371,6 +371,89 @@ const Outro: React.FC = () => {
   );
 };
 
+const QrEnd: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const enter = spring({ frame, fps, config: { damping: 12, stiffness: 140 } });
+  const cardScale = interpolate(enter, [0, 1], [0.6, 1]);
+  const cardRot = interpolate(enter, [0, 1], [-6, -2]);
+  const cta = spring({ frame: frame - 18, fps, config: { damping: 14 } });
+  const ctaY = interpolate(cta, [0, 1], [60, 0]);
+  const pulse = 1 + Math.sin((frame / fps) * 5) * 0.03;
+  return (
+    <AbsoluteFill style={{ background: YELLOW }}>
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(${BLACK} 5px, transparent 6px)`,
+          backgroundSize: "50px 50px",
+          opacity: 0.18,
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 60,
+          padding: 60,
+        }}
+      >
+        <div
+          style={{
+            background: ORANGE,
+            color: BLACK,
+            fontFamily: trade.fontFamily,
+            fontSize: 110,
+            padding: "18px 50px",
+            border: `8px solid ${BLACK}`,
+            boxShadow: `14px 14px 0 ${BLACK}`,
+            transform: `translateY(${ctaY}px) rotate(-2deg)`,
+            opacity: cta,
+            lineHeight: 1,
+          }}
+        >
+          Scan to Shop
+        </div>
+        <div
+          style={{
+            transform: `scale(${cardScale * pulse}) rotate(${cardRot}deg)`,
+            width: 760,
+            height: 760,
+            background: WHITE,
+            border: `10px solid ${BLACK}`,
+            boxShadow: `20px 20px 0 ${BLACK}`,
+            overflow: "hidden",
+          }}
+        >
+          <Img
+            src={staticFile("qr.png")}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        </div>
+        <div
+          style={{
+            background: BLACK,
+            color: YELLOW,
+            fontFamily: space.fontFamily,
+            fontWeight: 700,
+            fontSize: 56,
+            padding: "22px 44px",
+            border: `8px solid ${BLACK}`,
+            boxShadow: `12px 12px 0 ${ORANGE}`,
+            transform: `translateY(${ctaY}px)`,
+            opacity: cta,
+            textTransform: "uppercase",
+            letterSpacing: 3,
+          }}
+        >
+          tomashops.shop
+        </div>
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
 export const MainVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: BLACK }}>
@@ -388,6 +471,9 @@ export const MainVideo: React.FC = () => {
       ))}
       <Sequence from={INTRO + SHOTS.length * PER_SHOT} durationInFrames={OUTRO}>
         <Outro />
+      </Sequence>
+      <Sequence from={INTRO + SHOTS.length * PER_SHOT + OUTRO} durationInFrames={QR_END}>
+        <QrEnd />
       </Sequence>
     </AbsoluteFill>
   );
