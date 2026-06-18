@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
-import { QRCodeCanvas } from 'qrcode.react';
 import { Copy, Share2, Download, Check } from 'lucide-react';
 import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import qrAsset from '@/assets/tomashops-qr.png.asset.json';
 
 const SHARE_URL = 'https://tomashops.shop';
+const QR_SRC = qrAsset.url;
 
 const Share = () => {
   const qrWrapRef = useRef<HTMLDivElement>(null);
@@ -36,14 +37,19 @@ const Share = () => {
     }
   };
 
-  const handleDownload = () => {
-    const canvas = qrWrapRef.current?.querySelector('canvas') as HTMLCanvasElement | null;
-    if (!canvas) return;
-    const url = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tomashops-qr.png';
-    a.click();
+  const handleDownload = async () => {
+    try {
+      const res = await fetch(QR_SRC);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tomashops-qr.png';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      toast.error('Download failed');
+    }
   };
 
   return (
@@ -63,13 +69,11 @@ const Share = () => {
             ref={qrWrapRef}
             className="bg-white rounded-3xl border-4 border-black p-6 md:p-8 flex items-center justify-center mx-auto max-w-xs"
           >
-            <QRCodeCanvas
-              value={SHARE_URL}
-              size={256}
-              level="H"
-              fgColor="#0a0a0a"
-              bgColor="#ffffff"
-              includeMargin={false}
+            <img
+              src={QR_SRC}
+              alt="Scan to visit tomashops.shop"
+              className="w-full h-auto select-none"
+              draggable={false}
             />
           </div>
 
