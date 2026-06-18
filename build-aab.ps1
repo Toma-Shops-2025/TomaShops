@@ -22,6 +22,11 @@ $ErrorActionPreference = "Stop"
  $KeystorePath  = "C:\Keys\tomashops.jks"
  $KeyAlias      = "tomashops1"
  
+function Write-Utf8NoBom($Path, $Content) {
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $Content, $utf8NoBom)
+}
+
 
 Set-Location $ProjectRoot
 
@@ -46,7 +51,7 @@ $cfg = Get-Content $CapConfig -Raw | ConvertFrom-Json
 if ($cfg.PSObject.Properties.Name -contains "server") {
     $cfg.PSObject.Properties.Remove("server")
 }
-$cfg | ConvertTo-Json -Depth 10 | Set-Content $CapConfig -Encoding UTF8
+Write-Utf8NoBom $CapConfig ($cfg | ConvertTo-Json -Depth 10)
 
 try {
     Write-Host "[2/6] bun install..." -ForegroundColor Cyan
@@ -57,12 +62,13 @@ try {
  
      Write-Host "[3b/6] Auto-bumping versionCode in build.gradle..." -ForegroundColor Cyan
      $GradleContent = Get-Content $BuildGradle -Raw
+     if ($GradleContent.Length -gt 0 -and $GradleContent[0] -eq [char]0xFEFF) { $GradleContent = $GradleContent.Substring(1) }
      # Find current versionCode
      if ($GradleContent -match 'versionCode\s+(\d+)') {
          $OldCode = [int]$matches[1]
          $NewCode = $OldCode + 1
          $GradleContent = $GradleContent -replace "versionCode\s+$OldCode", "versionCode $NewCode"
-         Set-Content $BuildGradle $GradleContent -Encoding UTF8
+         Write-Utf8NoBom $BuildGradle $GradleContent
          Write-Host "    versionCode bumped: $OldCode -> $NewCode" -ForegroundColor Green
      } else {
          Write-Host "    WARNING: could not find versionCode in build.gradle" -ForegroundColor Yellow
