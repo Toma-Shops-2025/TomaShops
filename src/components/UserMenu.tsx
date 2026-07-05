@@ -22,11 +22,16 @@ import {
   Package,
   Upload,
   Share2,
+  Sun,
+  Moon,
+  Monitor,
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
-const UserMenu = () => {
-  const { user, signOut, userType } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+const UserMenu \u003d () \u003d\u003e {
+  const { user, signOut, userType } \u003d useAuth();
+  const [isLoading, setIsLoading] \u003d useState(false);
+  const { setTheme, theme } \u003d useTheme();
 
   const handleSignOut = async () => {
     try {
@@ -139,6 +144,31 @@ const UserMenu = () => {
             <span>Share TomaShops</span>
           </DropdownMenuItem>
         </Link>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground pb-1">Theme</DropdownMenuLabel>
+        <div className="flex items-center gap-1 px-2 pb-2">
+          <button
+            onClick={() => setTheme('light')}
+            className={`flex-1 flex flex-col items-center justify-center py-2 rounded-md transition-colors ${theme === 'light' ? 'bg-secondary text-primary ring-1 ring-black' : 'hover:bg-muted text-muted-foreground'}`}
+          >
+            <Sun className="h-4 w-4 mb-1" />
+            <span className="text-[9px] uppercase font-bold">Light</span>
+          </button>
+          <button
+            onClick={() => setTheme('dark')}
+            className={`flex-1 flex flex-col items-center justify-center py-2 rounded-md transition-colors ${theme === 'dark' ? 'bg-secondary text-primary ring-1 ring-black' : 'hover:bg-muted text-muted-foreground'}`}
+          >
+            <Moon className="h-4 w-4 mb-1" />
+            <span className="text-[9px] uppercase font-bold">Dark</span>
+          </button>
+          <button
+            onClick={() => setTheme('system')}
+            className={`flex-1 flex flex-col items-center justify-center py-2 rounded-md transition-colors ${theme === 'system' ? 'bg-secondary text-primary ring-1 ring-black' : 'hover:bg-muted text-muted-foreground'}`}
+          >
+            <Monitor className="h-4 w-4 mb-1" />
+            <span className="text-[9px] uppercase font-bold">System</span>
+          </button>
+        </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} disabled={isLoading}>
           {isLoading ? (

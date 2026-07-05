@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Menu, X, Upload, Share2 } from 'lucide-react';
 import UserMenu from './UserMenu';
+import { ThemeToggle } from './ThemeToggle';
 import useModile from '@/hooks/use-mobile';
 
 const UpdatedNavbar = () => {
@@ -66,6 +67,7 @@ const UpdatedNavbar = () => {
                 </Link>
               </Button>
             )}
+            <ThemeToggle className="rounded-none border-2 border-black brutal-shadow brutal-press" />
             <UserMenu />
           </div>
 
@@ -98,6 +100,10 @@ const UpdatedNavbar = () => {
             </form>
 
             <nav className="space-y-1 font-bold uppercase text-sm tracking-wider">
+              <div className="flex items-center justify-between py-2 px-3 border-b-2 border-black mb-2">
+                <span className="text-xs text-muted-foreground uppercase tracking-widest">Theme</span>
+                <ThemeToggle className="rounded-none border-2 border-black h-8 w-8 brutal-shadow" />
+              </div>
               <Link to="/" className="block py-2 hover:bg-secondary px-3 border-l-4 border-transparent hover:border-black" onClick={() => setIsMenuOpen(false)}>Home</Link>
               <Link to="/share" className="flex items-center py-2 hover:bg-secondary px-3 border-l-4 border-transparent hover:border-black" onClick={() => setIsMenuOpen(false)}><Share2 className="h-4 w-4 mr-2" /> Share TomaShops</Link>
               {user ? (
