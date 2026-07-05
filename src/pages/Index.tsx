@@ -6,6 +6,7 @@ import Navbar from '@/components/UpdatedNavbar';
 import Footer from '@/components/Footer';
 import VideoProductCard from '@/components/VideoProductCard';
 import VerticalFeed from '@/components/VerticalFeed';
+import { OnboardingWalkthrough } from '@/components/OnboardingWalkthrough';
 import { Button } from '@/components/ui/button';
 import { X, Upload, Zap, Shield, Gift, LayoutGrid, Smartphone } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -310,6 +311,7 @@ const Index = () => {
       </main>
 
       <Footer />
+      <OnboardingWalkthrough />
     </div>
   );
 };
