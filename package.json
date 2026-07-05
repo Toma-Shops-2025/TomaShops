@@ -10,6 +10,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "assets:generate": "capacitor-assets generate --android",
     "electron:dev": "npm run build && electron .",
     "electron:pack": "npm run build && npx @electron/packager . TomaShops --platform=win32 --arch=x64 --out=electron-release --overwrite --ignore='node_modules' --ignore='^/src' --ignore='^/public' --ignore='^/electron-release'"
   },
@@ -17,6 +18,7 @@
     "@capacitor/android": "^8.4.0",
     "@capacitor/core": "^8.4.0",
     "@capacitor/ios": "^8.4.0",
+    "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.8",
     "@hookform/resolvers": "^3.9.0",
     "@lovable.dev/cloud-auth-js": "^1.1.2",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -71,6 +73,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.4.0",
     "@electron/packager": "^20.0.1",
     "@eslint/js": "^9.9.0",

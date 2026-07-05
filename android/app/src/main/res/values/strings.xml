@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">tomashops</string>
+    <string name="title_activity_main">tomashops</string>
+    <string name="package_name">shop.tomashops.app</string>
+    <string name="custom_url_scheme">shop.tomashops.app</string>
+</resources>

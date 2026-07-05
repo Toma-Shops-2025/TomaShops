@@ -31,8 +31,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        await fetchUserType(session.user.id);
+        // Add a 3s timeout to fetchUserType so it never hangs the whole app
+        await Promise.race([
+          fetchUserType(session.user.id),
+          new Promise((resolve) => setTimeout(resolve, 3000))
+        ]);
       }
+      setLoading(false);
+    }).catch(err => {
+      console.error("Initial session error:", err);
       setLoading(false);
     });
 
@@ -43,7 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       if (session?.user) {
         setLoading(true);
-        await fetchUserType(session.user.id);
+        await Promise.race([
+          fetchUserType(session.user.id),
+          new Promise((resolve) => setTimeout(resolve, 3000))
+        ]);
         setLoading(false);
       } else {
         setUserTypeState(null);

@@ -46,7 +46,7 @@ $cfg = Get-Content $CapConfig -Raw | ConvertFrom-Json
 if ($cfg.PSObject.Properties.Name -contains "server") {
     $cfg.PSObject.Properties.Remove("server")
 }
-$cfg | ConvertTo-Json -Depth 10 | Set-Content $CapConfig -Encoding UTF8
+[System.IO.File]::WriteAllText($CapConfig, ($cfg | ConvertTo-Json -Depth 10), (New-Object System.Text.UTF8Encoding($false)))
 
 try {
     Write-Host "[2/6] bun install..." -ForegroundColor Cyan
@@ -54,15 +54,18 @@ try {
 
      Write-Host "[3/6] bun run build..." -ForegroundColor Cyan
      bun run build
- 
+
+     Write-Host "[3c/6] Regenerating Android assets from resources/..." -ForegroundColor Cyan
+     bun run assets:generate
+
      Write-Host "[3b/6] Auto-bumping versionCode in build.gradle..." -ForegroundColor Cyan
-     $GradleContent = Get-Content $BuildGradle -Raw
+     $GradleContent = [System.IO.File]::ReadAllText($BuildGradle).TrimStart([char]0xFEFF)
      # Find current versionCode
      if ($GradleContent -match 'versionCode\s+(\d+)') {
          $OldCode = [int]$matches[1]
          $NewCode = $OldCode + 1
          $GradleContent = $GradleContent -replace "versionCode\s+$OldCode", "versionCode $NewCode"
-         Set-Content $BuildGradle $GradleContent -Encoding UTF8
+         [System.IO.File]::WriteAllText($BuildGradle, $GradleContent, (New-Object System.Text.UTF8Encoding($false)))
          Write-Host "    versionCode bumped: $OldCode -> $NewCode" -ForegroundColor Green
      } else {
          Write-Host "    WARNING: could not find versionCode in build.gradle" -ForegroundColor Yellow
