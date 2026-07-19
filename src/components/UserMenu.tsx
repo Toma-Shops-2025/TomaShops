@@ -28,10 +28,10 @@ import {
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-const UserMenu \u003d () \u003d\u003e {
-  const { user, signOut, userType } \u003d useAuth();
-  const [isLoading, setIsLoading] \u003d useState(false);
-  const { setTheme, theme } \u003d useTheme();
+const UserMenu = () => {
+  const { user, signOut, userType } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { setTheme, theme } = useTheme();
 
   const handleSignOut = async () => {
     try {
