@@ -1,116 +1,44 @@
-# TomaShops — Build signed Android App Bundle (.aab) for Google Play
-# Same flow as MyRunner, ViralSnap, AlgoRhythm, RewardLoop.
-#
-# Prereqs (one-time):
-#   1. bun installed
-#   2. JDK 17 installed (winget install --id EclipseAdoptium.Temurin.17.JDK -e)
-#   3. Android Studio installed (so Android SDK exists)
-#   4. Keystore created at C:\Keys\tomashops.jks (alias: tomashops1)
-#        keytool -genkey -v -keystore C:\Keys\tomashops.jks -alias tomashops1 -keyalg RSA -keysize 2048 -validity 10000
-#   5. Run once:  bunx cap add android ; bun run build ; bunx cap sync android
-#
-# Usage:
-#   .\build-aab.ps1
+# TomaShops - Build signed AAB for Google Play
+# Usage: cd Desktop\tomashops ; .\build-aab.ps1
+
+$ProjectPath  = "$env:USERPROFILE\Desktop\tomashops"
+$KeystorePath = "C:\Keys\tomashops.jks"
+$KeyAlias     = "tomashops1"
+$AabPath      = "$ProjectPath\android\app\build\outputs\bundle\release\app-release.aab"
 
 $ErrorActionPreference = "Stop"
 
- $ProjectRoot   = $PSScriptRoot
- $AndroidDir    = Join-Path $ProjectRoot "android"
- $BuildGradle   = Join-Path $AndroidDir "app\build.gradle"
- $CapConfig     = Join-Path $ProjectRoot "capacitor.config.json"
- $CapBackup     = Join-Path $ProjectRoot "capacitor.config.backup.json"
- $KeystorePath  = "C:\Keys\tomashops.jks"
- $KeyAlias      = "tomashops1"
- 
+function Step($msg) { Write-Host "`n==> $msg" -ForegroundColor Cyan }
 
-Set-Location $ProjectRoot
+Step "Building Web App..."
+Set-Location $ProjectPath
+bun install
+bun run build
 
-if (-not (Test-Path $AndroidDir)) {
-    Write-Host "android/ folder missing. Run: bunx cap add android" -ForegroundColor Red
-    exit 1
+Step "Syncing Capacitor..."
+bunx cap sync android
+
+Step "Bumping versionCode..."
+$gradle = "android/app/build.gradle"
+$content = Get-Content $gradle -Raw
+if ($content -match 'versionCode\s+(\d+)') {
+    $old = [int]$Matches[1]
+    $new = $old + 1
+    $content = $content -replace "versionCode\s+$old", "versionCode $new"
+    Set-Content $gradle $content -NoNewline
+    Write-Host "    versionCode: $old -> $new" -ForegroundColor Green
 }
-if (-not (Test-Path $KeystorePath)) {
-    Write-Host "Keystore missing at $KeystorePath" -ForegroundColor Red
-    Write-Host "Create it with:" -ForegroundColor Yellow
-    Write-Host "  keytool -genkey -v -keystore C:\Keys\tomashops.jks -alias tomashops1 -keyalg RSA -keysize 2048 -validity 10000"
-    exit 1
-}
 
-$KeystorePassSecure = Read-Host "Keystore password" -AsSecureString
-$KeystorePass = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
-    [Runtime.InteropServices.Marshal]::SecureStringToBSTR($KeystorePassSecure))
+Step "Keystore credentials (typing is hidden)"
+$storePassSecure = Read-Host "Keystore password" -AsSecureString
+$storePass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($storePassSecure))
 
-Write-Host "[1/6] Stripping dev server.url from capacitor.config.json..." -ForegroundColor Cyan
-Copy-Item $CapConfig $CapBackup -Force
-$cfg = Get-Content $CapConfig -Raw | ConvertFrom-Json
-if ($cfg.PSObject.Properties.Name -contains "server") {
-    $cfg.PSObject.Properties.Remove("server")
-}
-[System.IO.File]::WriteAllText($CapConfig, ($cfg | ConvertTo-Json -Depth 10), (New-Object System.Text.UTF8Encoding($false)))
+Step "Building Android AAB..."
+Set-Location "$ProjectPath\android"
+& .\gradlew.bat clean bundleRelease "-Pandroid.injected.signing.store.file=$KeystorePath" "-Pandroid.injected.signing.store.password=$storePass" "-Pandroid.injected.signing.key.alias=$KeyAlias" "-Pandroid.injected.signing.key.password=$storePass"
 
-try {
-    Write-Host "[2/6] bun install..." -ForegroundColor Cyan
-    bun install
-
-     Write-Host "[3/6] bun run build..." -ForegroundColor Cyan
-     bun run build
-
-     Write-Host "[3c/6] Regenerating Android assets from resources/..." -ForegroundColor Cyan
-     bun run assets:generate
-
-     Write-Host "[3b/6] Auto-bumping versionCode in build.gradle..." -ForegroundColor Cyan
-     $GradleContent = [System.IO.File]::ReadAllText($BuildGradle).TrimStart([char]0xFEFF)
-     # Find current versionCode
-     if ($GradleContent -match 'versionCode\s+(\d+)') {
-         $OldCode = [int]$matches[1]
-         $NewCode = $OldCode + 1
-         $GradleContent = $GradleContent -replace "versionCode\s+$OldCode", "versionCode $NewCode"
-         [System.IO.File]::WriteAllText($BuildGradle, $GradleContent, (New-Object System.Text.UTF8Encoding($false)))
-         Write-Host "    versionCode bumped: $OldCode -> $NewCode" -ForegroundColor Green
-     } else {
-         Write-Host "    WARNING: could not find versionCode in build.gradle" -ForegroundColor Yellow
-     }
- 
-     Write-Host "[4/6] bunx cap sync android..." -ForegroundColor Cyan
-     bunx cap sync android
- 
-
-    Write-Host "[5/6] gradlew bundleRelease..." -ForegroundColor Cyan
-    $Gradlew = Join-Path $AndroidDir "gradlew.bat"
-    if (-not (Test-Path $Gradlew)) {
-        throw "gradlew.bat missing at $Gradlew. Run: Remove-Item android -Recurse -Force ; bunx cap add android ; bun run build ; bunx cap sync android"
-    }
-    Push-Location $AndroidDir
-    try {
-        & $Gradlew clean bundleRelease
-        if ($LASTEXITCODE -ne 0) { throw "gradle bundleRelease failed (exit $LASTEXITCODE)" }
-    } finally {
-        Pop-Location
-    }
-
-    $UnsignedAab = Join-Path $AndroidDir "app\build\outputs\bundle\release\app-release.aab"
-    if (-not (Test-Path $UnsignedAab)) { throw "AAB not found at $UnsignedAab" }
-
-    Write-Host "[6/6] Signing AAB with jarsigner..." -ForegroundColor Cyan
-    jarsigner -verbose `
-        -sigalg SHA256withRSA `
-        -digestalg SHA-256 `
-        -keystore $KeystorePath `
-        -storepass $KeystorePass `
-        -keypass $KeystorePass `
-        $UnsignedAab `
-        $KeyAlias
-
-    Write-Host ""
-    Write-Host "SUCCESS" -ForegroundColor Green
-    Write-Host "Signed AAB: $UnsignedAab" -ForegroundColor Green
-    Write-Host "Upload to Google Play Console -> Production -> Create new release." -ForegroundColor Green
-
-    # Pop open the folder with the AAB selected
-    Start-Process "explorer.exe" -ArgumentList "/select,`"$UnsignedAab`""
-}
-finally {
-    Write-Host ""
-    Write-Host "Restoring dev capacitor.config.json..." -ForegroundColor DarkGray
-    Move-Item $CapBackup $CapConfig -Force
+Set-Location $ProjectPath
+if (Test-Path $AabPath) {
+    Write-Host "`n  SUCCESS! AAB Ready: $AabPath" -ForegroundColor Green
+    Start-Process explorer.exe "/select,`"$AabPath`""
 }

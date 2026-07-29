@@ -3,7 +3,7 @@
   "appName": "TomaShops",
   "webDir": "dist",
   "server": {
-    "url": "https://896057a4-6e3c-4327-85ea-c092a6b95a59.lovableproject.com?forceHideBadge=true",
-    "cleartext": true
+    "url": "https://tomashops.shop",
+    "cleartext": false
   }
 }
