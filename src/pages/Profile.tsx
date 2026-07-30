@@ -319,6 +319,38 @@ const Profile = () => {
             )}
           </TabsContent>
         </Tabs>
+
+        {/* Help & Safety Section */}
+        <div className="mt-12 pt-8 border-t">
+          <h2 className="text-xl font-bold mb-6">Help & Safety</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Link to="/contact" className="p-4 rounded-lg bg-card border hover:border-primary/50 transition-colors flex flex-col gap-1">
+              <span className="font-bold text-sm">Contact Support</span>
+              <span className="text-xs text-muted-foreground">Get help with your account or orders</span>
+            </Link>
+            <Link to="/faq" className="p-4 rounded-lg bg-card border hover:border-primary/50 transition-colors flex flex-col gap-1">
+              <span className="font-bold text-sm">F.A.Q.</span>
+              <span className="text-xs text-muted-foreground">Common questions about TomaShops</span>
+            </Link>
+            <Link to="/privacy" className="p-4 rounded-lg bg-card border hover:border-primary/50 transition-colors flex flex-col gap-1">
+              <span className="font-bold text-sm">Privacy Policy</span>
+              <span className="text-xs text-muted-foreground">How we handle your data</span>
+            </Link>
+            <Link to="/terms" className="p-4 rounded-lg bg-card border hover:border-primary/50 transition-colors flex flex-col gap-1">
+              <span className="font-bold text-sm">Terms of Service</span>
+              <span className="text-xs text-muted-foreground">Rules for using our platform</span>
+            </Link>
+            <Link to="/delete-account" className="p-4 rounded-lg bg-red-500/5 border border-red-500/10 hover:border-red-500/30 transition-colors flex flex-col gap-1">
+              <span className="font-bold text-sm text-red-500">Delete Account</span>
+              <span className="text-xs text-red-500/60">Permanently remove your account and data</span>
+            </Link>
+          </div>
+          <div className="mt-8 text-center">
+            <Button variant="ghost" size="sm" onClick={() => { if(confirm("Are you sure you want to sign out?")) signOut(); }} className="text-muted-foreground">
+              Sign Out
+            </Button>
+          </div>
+        </div>
       </main>
 
       <Footer />
