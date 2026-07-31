@@ -107,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = async (email: string, password: string, userType: 'buyer' | 'seller' = 'buyer') => {
     try {
       const redirectUrl = `${window.location.origin}/`;
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -116,6 +116,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
       });
       if (error) throw error;
+
+      if (data.user) {
+        // Sync email to profiles for admin visibility
+        await supabase.from('profiles').insert({
+          id: data.user.id,
+          user_type: userType,
+          email: email,
+          updated_at: new Date().toISOString()
+        }).catch(err => console.warn("Profile sync error", err));
+      }
+
       toast.success('Registration successful! Please check your email for verification.');
     } catch (error: any) {
       toast.error(error.message || 'Registration failed');
