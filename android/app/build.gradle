@@ -1,4 +1,4 @@
-﻿apply plugin: 'com.android.application'
+apply plugin: 'com.android.application'
 
 android {
     namespace = "shop.tomashops.app"
@@ -7,7 +7,7 @@ android {
         applicationId "shop.tomashops.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
+        versionCode 27
         versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

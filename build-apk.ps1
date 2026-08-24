@@ -15,6 +15,9 @@ Set-Location $ProjectPath
 bun install
 bun run build
 
+Step "Regenerating Android launcher icon + splash from resources/"
+bun run assets:generate
+
 Step "Syncing Capacitor..."
 bunx cap sync android
 

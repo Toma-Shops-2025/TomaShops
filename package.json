@@ -10,7 +10,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "assets:generate": "capacitor-assets generate --android",
+    "assets:generate": "npx @capacitor/assets generate --android --assetPath resources",
     "electron:dev": "npm run build && electron .",
     "electron:pack": "npm run build && npx @electron/packager . TomaShops --platform=win32 --arch=x64 --out=electron-release --overwrite --ignore='node_modules' --ignore='^/src' --ignore='^/public' --ignore='^/electron-release'"
   },
