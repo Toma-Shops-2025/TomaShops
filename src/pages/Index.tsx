@@ -46,7 +46,7 @@ const LISTING_FILTERS: Array<{ key: 'all' | 'direct' | 'affiliate'; label: strin
   { key: 'direct', label: 'Direct' },
   { key: 'affiliate', label: 'Affiliate' },
 ];
-const PRODUCTS_TIMEOUT_MS = 8_000;
+const PRODUCTS_TIMEOUT_MS = 15_000;
 
 const Index = () => {
   const [activeCategory, setActiveCategory] = useState('All');
