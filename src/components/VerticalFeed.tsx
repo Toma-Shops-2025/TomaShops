@@ -4,6 +4,7 @@ import { Heart, Eye, Volume2, VolumeX, ShoppingBag, Share2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/sonner';
+import { safeImageUrl, safeVideoUrl } from '@/lib/media';
 
 interface FeedProduct {
   id: string;
@@ -109,6 +110,9 @@ const FeedSlide = ({ product, index, isActive, muted, setMuted, registerVideo }:
   const navigate = useNavigate();
   const [isFavorited, setIsFavorited] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const videoSrc = !videoFailed ? safeVideoUrl(product.videoUrl) : undefined;
+  const imageSrc = safeImageUrl(product.thumbnailUrl);
 
   useEffect(() => {
     let cancelled = false;
@@ -157,19 +161,20 @@ const FeedSlide = ({ product, index, isActive, muted, setMuted, registerVideo }:
       data-index={index}
       className="relative w-full h-full snap-start snap-always flex items-center justify-center bg-black"
     >
-      {product.videoUrl ? (
+      {videoSrc ? (
         <video
           ref={registerVideo}
-          src={product.videoUrl}
-          poster={product.thumbnailUrl}
+          src={videoSrc}
+          poster={imageSrc}
           loop
           playsInline
           muted={muted}
           preload={isActive ? 'auto' : 'metadata'}
           className="w-full h-full object-contain md:object-cover"
+          onError={() => setVideoFailed(true)}
         />
       ) : (
-        <img src={product.thumbnailUrl} alt={product.title} className="w-full h-full object-cover" />
+        <img src={imageSrc} alt={product.title} className="w-full h-full object-cover" />
       )}
 
       {/* Top chip + mute */}

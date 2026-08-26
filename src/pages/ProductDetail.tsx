@@ -19,6 +19,7 @@ import PaymentProcessing from '@/components/PaymentProcessing';
 import ReportDialog from '@/components/ReportDialog';
 import BlockUserButton from '@/components/BlockUserButton';
 import BackButton from '@/components/BackButton';
+import { safeImageUrl, safeVideoUrl } from '@/lib/media';
 
 interface Product {
   id: string;
@@ -108,7 +109,7 @@ const ProductDetail = () => {
   // Set active image to thumbnail when product loads
   useEffect(() => {
     if (product) {
-      setActiveImage(product.thumbnailUrl);
+      setActiveImage(safeImageUrl(product.thumbnailUrl));
     }
   }, [product]);
   
@@ -351,24 +352,32 @@ const ProductDetail = () => {
           <div className="lg:col-span-2">
             <div className="rounded-lg overflow-hidden border bg-card">
               <div className="relative">
-                {activeImage === product.thumbnailUrl && product.videoUrl ? (
-                  <div className="relative aspect-video w-full">
-                    <video 
-                      src={product.videoUrl} 
-                      className="w-full h-full object-cover" 
-                      controls 
-                      poster={product.thumbnailUrl}
-                    />
-                  </div>
-                ) : (
-                  <div className="relative aspect-video w-full">
-                    <img 
-                      src={activeImage || product.thumbnailUrl} 
-                      alt={product.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
+                {(() => {
+                  const thumb = safeImageUrl(product.thumbnailUrl);
+                  const videoSrc = safeVideoUrl(product.videoUrl);
+                  const showVideo = activeImage === thumb && !!videoSrc;
+                  if (showVideo) {
+                    return (
+                      <div className="relative aspect-video w-full">
+                        <video
+                          src={videoSrc}
+                          className="w-full h-full object-cover"
+                          controls
+                          poster={thumb}
+                        />
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="relative aspect-video w-full">
+                      <img
+                        src={safeImageUrl(activeImage || product.thumbnailUrl)}
+                        alt={product.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  );
+                })()}
               </div>
               
               {/* Thumbnails */}
@@ -376,32 +385,34 @@ const ProductDetail = () => {
                 <div className="flex space-x-2 overflow-x-auto pb-2">
                   <div 
                     className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                      activeImage === product.thumbnailUrl ? 'border-primary' : 'border-transparent'
+                      activeImage === safeImageUrl(product.thumbnailUrl) ? 'border-primary' : 'border-transparent'
                     }`}
-                    onClick={() => setActiveImage(product.thumbnailUrl)}
+                    onClick={() => setActiveImage(safeImageUrl(product.thumbnailUrl))}
                   >
                     <div className="relative w-full h-full">
                       <img 
-                        src={product.thumbnailUrl} 
+                        src={safeImageUrl(product.thumbnailUrl)} 
                         alt="Thumbnail" 
                         className="w-full h-full object-cover rounded"
                       />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
-                        <PlayCircle className="h-6 w-6 text-primary-foreground" />
-                      </div>
+                      {safeVideoUrl(product.videoUrl) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
+                          <PlayCircle className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                      )}
                     </div>
                   </div>
                   
-                  {product.imageUrls.map((imgUrl, idx) => (
+                  {(product.imageUrls || []).map((imgUrl, idx) => (
                     <div 
                       key={idx}
                       className={`w-20 h-20 flex-shrink-0 rounded cursor-pointer border-2 ${
-                        activeImage === imgUrl ? 'border-primary' : 'border-transparent'
+                        activeImage === safeImageUrl(imgUrl) ? 'border-primary' : 'border-transparent'
                       }`}
-                      onClick={() => setActiveImage(imgUrl)}
+                      onClick={() => setActiveImage(safeImageUrl(imgUrl))}
                     >
                       <img 
-                        src={imgUrl} 
+                        src={safeImageUrl(imgUrl)} 
                         alt={`Product ${idx + 1}`} 
                         className="w-full h-full object-cover rounded" 
                       />

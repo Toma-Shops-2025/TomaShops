@@ -5,6 +5,7 @@ import { Heart, Eye } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { toast } from '@/components/ui/sonner';
+import { safeImageUrl, safeVideoUrl } from '@/lib/media';
 
 interface VideoProductCardProps {
   product: Product & {
@@ -27,9 +28,12 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorited, setIsFavorited] = useState(initialFavorited);
   const [busy, setBusy] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoSrc = !videoFailed ? safeVideoUrl(product.videoUrl) : undefined;
+  const imageSrc = safeImageUrl(product.thumbnailUrl);
 
   useEffect(() => {
     let cancelled = false;
@@ -84,19 +88,20 @@ const VideoProductCard = ({ product, featured = false, initialFavorited = false,
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {product.videoUrl ? (
+          {videoSrc ? (
             <video
               ref={videoRef}
-              src={product.videoUrl}
-              poster={product.thumbnailUrl}
+              src={videoSrc}
+              poster={imageSrc}
               muted
               loop
               playsInline
               preload="metadata"
               className="w-full h-full object-cover"
+              onError={() => setVideoFailed(true)}
             />
           ) : (
-            <img src={product.thumbnailUrl} alt={product.title} className="w-full h-full object-cover" />
+            <img src={imageSrc} alt={product.title} className="w-full h-full object-cover" />
           )}
 
           {/* listing-type chip */}
