@@ -32,7 +32,7 @@ const UpdatedNavbar = () => {
   };
 
   return (
-    <header className="bg-background border-b-4 border-black sticky top-0 z-50">
+    <header className="bg-background border-b-4 border-black sticky top-0 z-50 pt-safe">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2 group">

@@ -5,5 +5,11 @@
   "server": {
     "url": "https://tomashops.shop",
     "cleartext": false
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "LIGHT"
+    }
   }
 }
